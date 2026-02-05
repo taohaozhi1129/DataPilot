@@ -12,7 +12,7 @@ class Settings(BaseSettings):
     # -------------------------------------------------------------------------
     # LLM (OpenAI / Compatible) Configuration
     # -------------------------------------------------------------------------
-    OPENAI_API_KEY: str = "sk-b073a26a7c7d4eba85d6ebe077edd761"
+    OPENAI_API_KEY: str = ""
     OPENAI_BASE_URL: str = "https://api.deepseek.com"
     OPENAI_MODEL_NAME: str = "deepseek-chat"
     
