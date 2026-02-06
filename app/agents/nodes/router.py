@@ -1,14 +1,24 @@
-from langchain_core.prompts import ChatPromptTemplate
+from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
 from langchain_core.output_parsers import PydanticOutputParser
 from pydantic import BaseModel, Field
 from typing import Literal
+import logging
+
 from app.services.llm_service import LLMService
 from app.agents.state import AgentState
 from app.core.prompts import ROUTER_SYSTEM_PROMPT
 from app.core.intents import get_intent_options, get_few_shot_examples
+from app.agents.utils.history import split_history_and_input
+from config import settings
+
+logger = logging.getLogger(__name__)
 
 # 定义结构化输出，包含推理过程 (Chain of Thought)
 class RouterOutput(BaseModel):
+    """
+    路由器的输出结构模型。
+    包含思维链 (CoT) 和最终分类结果。
+    """
     thought: str = Field(
         description="思考过程。简要分析用户的输入，判断其核心意图，并解释分类理由。"
     )
@@ -17,14 +27,33 @@ class RouterOutput(BaseModel):
     )
 
 class RouterNode:
+    """
+    路由节点 (Router Node)。
+    负责根据用户输入和对话历史，判断用户的意图 (Intent)。
+    """
     def __init__(self):
         self.llm_service = LLMService()
         self.llm = self.llm_service.get_llm()
 
     def __call__(self, state: AgentState):
+        """
+        执行路由逻辑。
+        
+        Args:
+            state (AgentState): 当前 Agent 的状态
+            
+        Returns:
+            dict: 更新后的状态，包含 intent 字段
+        """
         messages = state['messages']
-        last_message = messages[-1]
-        user_input = last_message.content if hasattr(last_message, 'content') else str(last_message)
+        logger.debug(f"Router processing state with {len(messages)} messages.")
+        
+        # 分离历史消息和当前输入，避免上下文过长
+        history, user_input = split_history_and_input(
+            messages,
+            max_history=settings.HISTORY_MAX_MESSAGES,
+        )
+        summary = state.get("conversation_summary") or ""
 
         # 1. 动态获取意图选项和示例
         intent_options = get_intent_options()
@@ -45,16 +74,27 @@ class RouterNode:
 
         prompt = ChatPromptTemplate.from_messages([
             ("system", system_prompt),
-            ("user", "{input}")
+            ("system", "对话摘要（如有）: {summary}"),
+            MessagesPlaceholder("history", optional=True),
+            ("user", "{input}"),
         ])
         
         # 使用 partial 注入 format_instructions，这样其中的花括号不会被再次解析
         prompt = prompt.partial(format_instructions=parser.get_format_instructions())
         
         chain = prompt | self.llm | parser
+        
+        logger.info(f"Routing user input: {user_input[:50]}...")
         try:
-            result = chain.invoke({"input": user_input})
-        except Exception:
+            result = chain.invoke({
+                "history": history,
+                "input": user_input,
+                "summary": summary,
+            })
+            logger.info(f"Intent detected: {result.category} | Thought: {result.thought}")
+        except Exception as e:
+            logger.error(f"Router failed to determine intent: {e}", exc_info=True)
+            # 兜底策略：如果解析失败，默认为 CHAT
             return {"intent": "CHAT"}
         
         # 4. 返回结果

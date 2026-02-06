@@ -20,5 +20,8 @@ class AgentState(TypedDict):
     # 专门用于多轮任务填槽的上下文 (Persistence)
     # 使用覆盖更新策略 (默认行为)，即新值覆盖旧值
     active_task: Optional[TaskContext]
-    
+
+    # 长期记忆摘要（跨多轮保留）
+    conversation_summary: Optional[str]
+
     final_output: str

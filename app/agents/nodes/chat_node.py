@@ -1,29 +1,60 @@
-from langchain_core.prompts import ChatPromptTemplate
+from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
 from langchain_core.messages import AIMessage
+import logging
+
 from app.services.llm_service import LLMService
 from app.agents.state import AgentState
+from app.agents.utils.history import split_history_and_input
+from config import settings
+
+logger = logging.getLogger(__name__)
 
 class ChatNode:
+    """
+    通用对话节点 (Chat Node)。
+    处理非特定任务的闲聊、问答或兜底回复。
+    """
     def __init__(self):
         self.llm = LLMService().get_llm()
 
     def __call__(self, state: AgentState):
+        """
+        执行对话生成逻辑。
+        
+        Args:
+            state (AgentState): 当前 Agent 的状态
+            
+        Returns:
+            dict: 更新后的状态，包含 messages 和 final_output
+        """
         messages = state['messages']
+        logger.debug(f"ChatNode processing state with {len(messages)} messages.")
+        
+        history, user_input = split_history_and_input(
+            messages,
+            max_history=settings.HISTORY_MAX_MESSAGES,
+        )
+        summary = state.get("conversation_summary") or ""
         
         prompt = ChatPromptTemplate.from_messages([
             ("system", "你是一个友好的AI助手。"),
+            ("system", "对话摘要（如有）: {summary}"),
+            MessagesPlaceholder("history", optional=True),
             ("user", "{input}")
         ])
         
         chain = prompt | self.llm
-        # 假设 messages 是 BaseMessage 或类似的列表，我们获取最后一条的内容
-        # 或者如果使用 LangChain 的历史感知机制，则传递整个历史
-        # 为了简单起见，仅使用最后一条消息内容
-        last_message = messages[-1].content
         
+        logger.info(f"Generating chat response for input: {user_input[:50]}...")
         try:
-            response = chain.invoke({"input": last_message})
+            response = chain.invoke({
+                "history": history,
+                "input": user_input,
+                "summary": summary,
+            })
+            logger.info("Chat response generated successfully.")
         except Exception as exc:
+            logger.error(f"Chat service failed: {exc}", exc_info=True)
             msg = f"抱歉，当前对话服务不可用：{exc}"
             return {
                 "messages": [AIMessage(content=msg)],

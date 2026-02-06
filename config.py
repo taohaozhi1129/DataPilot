@@ -38,7 +38,20 @@ class Settings(BaseSettings):
     HYBRID_DENSE_WEIGHT: float = 0.6
     HYBRID_SPARSE_WEIGHT: float = 0.4
     HYBRID_CANDIDATE_MULT: int = 5
+
+    # -------------------------------------------------------------------------
+    # Conversation Memory
+    # -------------------------------------------------------------------------
+    HISTORY_MAX_MESSAGES: int = 12
+    SUMMARY_TRIGGER_MESSAGES: int = 24
+    SUMMARY_WINDOW_MESSAGES: int = 24
     
+    # -------------------------------------------------------------------------
+    # Logging Configuration
+    # -------------------------------------------------------------------------
+    LOG_LEVEL: str = "INFO"
+    LOG_FORMAT: str = "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
+
     # -------------------------------------------------------------------------
     # Storage & Cache (Redis) Configuration
     # -------------------------------------------------------------------------

@@ -4,7 +4,12 @@ from typing import List, Optional
 from langchain_core.messages import HumanMessage
 from app.agents.graph import graph
 from config import settings
+from app.core.logger import setup_logging
 import uuid
+import logging
+
+# 初始化日志
+logger = setup_logging()
 
 app = FastAPI(
     title="DataPilot AI Platform",
@@ -55,7 +60,16 @@ async def chat_endpoint(request: ChatRequest):
     
     # 执行图 (Graph)
     # 这里的 graph 已经配置了 AsyncRedisSaver，所以状态会自动持久化
-    final_state = await graph.ainvoke(initial_state, config=config)
+    logger.info(f"Invoking agent graph for thread_id: {thread_id} with query: {request.query}")
+    try:
+        final_state = await graph.ainvoke(initial_state, config=config)
+    except Exception as e:
+        logger.error(f"Error executing agent graph: {e}", exc_info=True)
+        return ChatResponse(
+            response="抱歉，系统内部发生错误，请稍后再试。",
+            thread_id=thread_id,
+            intent="ERROR"
+        )
     
     # 从最终状态中提取回复
     messages = final_state.get('messages', [])
@@ -63,6 +77,7 @@ async def chat_endpoint(request: ChatRequest):
     
     # 提取其他元数据
     intent = final_state.get('intent')
+    logger.info(f"Agent execution completed. Intent: {intent}")
     active_task = final_state.get('active_task', {})
     
     # 检查是否有缺失参数
