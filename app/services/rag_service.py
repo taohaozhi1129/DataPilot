@@ -10,6 +10,9 @@ from config import settings
 # 配置日志记录器
 logger = logging.getLogger(__name__)
 
+# 全局单例模型实例，避免重复加载
+_GLOBAL_EMBEDDING_MODEL: Optional[SentenceTransformer] = None
+
 class RagService:
     """
     RAG (Retrieval-Augmented Generation) 服务类。
@@ -17,7 +20,7 @@ class RagService:
     """
     def __init__(self):
         self._milvus_service: Optional[MilvusService] = None
-        self._embedding_model: Optional[SentenceTransformer] = None
+        # 注意：这里不再保存 _embedding_model 实例变量，而是使用全局变量
 
     def _get_milvus(self) -> MilvusService:
         """延迟加载 MilvusService 实例"""
@@ -26,23 +29,34 @@ class RagService:
         return self._milvus_service
 
     def _get_embedding_model(self) -> SentenceTransformer:
-        """延迟加载 Embedding 模型"""
-        if self._embedding_model is None:
-            logger.info(f"Loading embedding model from: {settings.EMBEDDING_MODEL_PATH}")
-            self._embedding_model = SentenceTransformer(settings.EMBEDDING_MODEL_PATH)
-        return self._embedding_model
+        """
+        延迟加载 Embedding 模型 (全局单例模式)。
+        确保整个应用生命周期内只加载一次模型，避免性能损耗。
+        """
+        global _GLOBAL_EMBEDDING_MODEL
+        if _GLOBAL_EMBEDDING_MODEL is None:
+            logger.info(f"Loading embedding model (Singleton) from: {settings.EMBEDDING_MODEL_PATH}")
+            # 这里可能会耗时几秒钟，但只会执行一次
+            _GLOBAL_EMBEDDING_MODEL = SentenceTransformer(settings.EMBEDDING_MODEL_PATH)
+            logger.info("Embedding model loaded successfully.")
+        return _GLOBAL_EMBEDDING_MODEL
 
-    def _get_embedding(self, text: str) -> List[float]:
+    def _get_embedding(self, text: str, instruction: str = "") -> List[float]:
         """
         为单个文本生成向量 embedding。
         
         Args:
             text: 输入文本
+            instruction: (Optional) 针对检索任务的查询指令前缀 (适用于 BGE v1.5+)
             
         Returns:
             List[float]: 文本的向量表示
         """
-        embeddings = self._get_embedding_model().encode([text])
+        # 针对 BGE v1.5 等模型，查询端通常需要添加特定指令以提升效果
+        input_text = f"{instruction}{text}" if instruction else text
+        
+        # show_progress_bar=False 避免在生产日志中打印冗余的 tqdm 进度条
+        embeddings = self._get_embedding_model().encode([input_text], show_progress_bar=False)
         return embeddings[0].tolist()
 
     def search_schemas(self, query: str, limit: int = 5) -> List[Dict[str, Any]]:
@@ -57,7 +71,9 @@ class RagService:
         Returns:
             List[Dict[str, Any]]: 检索到的元数据列表
         """
-        query_vector = self._get_embedding(query)
+        # BGE v1.5 推荐的中文查询指令
+        instruction = "为这个句子生成表示以用于检索相关文章："
+        query_vector = self._get_embedding(query, instruction=instruction)
         # 调用 Milvus 混合检索
         results = self._get_milvus().hybrid_search(
             collection_name="metadata_collection",
@@ -79,7 +95,9 @@ class RagService:
         Returns:
             List[Dict[str, Any]]: 检索到的模板列表
         """
-        query_vector = self._get_embedding(query)
+        # BGE v1.5 推荐的中文查询指令
+        instruction = "为这个句子生成表示以用于检索相关文章："
+        query_vector = self._get_embedding(query, instruction=instruction)
         results = self._get_milvus().hybrid_search(
             collection_name="template_collection",
             query_text=query,

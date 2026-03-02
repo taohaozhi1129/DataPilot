@@ -1,6 +1,7 @@
 from pydantic_settings import BaseSettings, SettingsConfigDict
 from typing import Optional
-
+# import os
+# os.environ["HF_ENDPOINT"] = "https://hf-mirror.com"
 class Settings(BaseSettings):
     """
     应用全局配置
@@ -25,8 +26,8 @@ class Settings(BaseSettings):
     # -------------------------------------------------------------------------
     # Embedding Model Configuration
     # -------------------------------------------------------------------------
-    EMBEDDING_MODEL_PATH: str = "BAAI/bge-base-zh"
-    EMBEDDING_DIMENSION: int = 768
+    EMBEDDING_MODEL_PATH: str = r"C:\\embedding\\bge-large-zh-v1.5"
+    EMBEDDING_DIMENSION: int = 1024
     MAX_TEXT_LEN: int = 8192
 
     # -------------------------------------------------------------------------
