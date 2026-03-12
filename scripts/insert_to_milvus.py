@@ -19,8 +19,19 @@ def embed_text(text: str):
     ).tolist()
 
 
+import os
+
+# 获取项目根目录 (假设 scripts 在根目录下的一级目录)
+PROJECT_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+DATA_DIR = os.path.join(PROJECT_ROOT, "tests", "data")
+
 def insert_tables():
-    with open("tables.json", "r", encoding="utf-8") as f:
+    file_path = os.path.join(DATA_DIR, "tables.json")
+    if not os.path.exists(file_path):
+        print(f"Error: File not found at {file_path}")
+        return
+
+    with open(file_path, "r", encoding="utf-8") as f:
         tables = json.load(f)
 
     batch = []
@@ -43,7 +54,12 @@ def insert_tables():
 
 
 def insert_columns():
-    with open("columns.json", "r", encoding="utf-8") as f:
+    file_path = os.path.join(DATA_DIR, "columns.json")
+    if not os.path.exists(file_path):
+        print(f"Error: File not found at {file_path}")
+        return
+
+    with open(file_path, "r", encoding="utf-8") as f:
         columns = json.load(f)
 
     batch = []

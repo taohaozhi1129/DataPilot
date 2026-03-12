@@ -89,6 +89,15 @@ def build_embedding_text_column(column_meta: dict):
 """
 
 
+import os
+
+# 获取项目根目录
+PROJECT_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+DATA_DIR = os.path.join(PROJECT_ROOT, "tests", "data")
+
+# 确保输出目录存在
+os.makedirs(DATA_DIR, exist_ok=True)
+
 def generate_all_metadata():
     tables = []
     columns = []
@@ -108,11 +117,12 @@ def generate_all_metadata():
     print(f"生成表数量: {len(tables)}")
     print(f"生成字段数量: {len(columns)}")
     print(f"总数据量: {len(tables) + len(columns)}")
+    print(f"数据输出目录: {DATA_DIR}")
 
-    with open("tables.json", "w", encoding="utf-8") as f:
+    with open(os.path.join(DATA_DIR, "tables.json"), "w", encoding="utf-8") as f:
         json.dump(tables, f, ensure_ascii=False, indent=2)
 
-    with open("columns.json", "w", encoding="utf-8") as f:
+    with open(os.path.join(DATA_DIR, "columns.json"), "w", encoding="utf-8") as f:
         json.dump(columns, f, ensure_ascii=False, indent=2)
 
 
