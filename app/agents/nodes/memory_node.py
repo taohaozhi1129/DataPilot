@@ -15,7 +15,14 @@ class MemoryNode:
     以减少 Context Window 占用并保持长期记忆。
     """
     def __init__(self):
-        self.llm = LLMService().get_llm()
+        self._llm_service = None
+        self._llm = None
+
+    def _get_llm(self):
+        if self._llm is None:
+            self._llm_service = self._llm_service or LLMService()
+            self._llm = self._llm_service.get_llm()
+        return self._llm
 
     def __call__(self, state: AgentState):
         """
@@ -50,7 +57,7 @@ class MemoryNode:
         prompt_messages.append(MessagesPlaceholder("history"))
 
         prompt = ChatPromptTemplate.from_messages(prompt_messages)
-        chain = prompt | self.llm
+        chain = prompt | self._get_llm()
 
         try:
             result = chain.invoke({"history": history})

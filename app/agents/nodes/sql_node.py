@@ -31,7 +31,15 @@ class SQLNode:
     """
     def __init__(self, rag_service: Optional[RagService] = None, llm_service: Optional[LLMService] = None):
         self.rag_service = rag_service or RagService()
-        self.llm = (llm_service or LLMService()).get_llm()
+        self._llm_service = llm_service
+        self._llm = None
+
+    def _get_llm(self):
+        if self._llm is None:
+            service = self._llm_service or LLMService()
+            self._llm = service.get_llm()
+            self._llm_service = service
+        return self._llm
 
     def __call__(self, state: AgentState):
         """
@@ -89,7 +97,7 @@ class SQLNode:
         ])
         
         # 3. 使用结构化输出
-        structured_llm = self.llm.with_structured_output(SQLOutput)
+        structured_llm = self._get_llm().with_structured_output(SQLOutput)
         chain = prompt | structured_llm
         
         try:

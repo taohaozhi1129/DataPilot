@@ -32,8 +32,14 @@ class RouterNode:
     负责根据用户输入和对话历史，判断用户的意图 (Intent)。
     """
     def __init__(self):
-        self.llm_service = LLMService()
-        self.llm = self.llm_service.get_llm()
+        self._llm_service = None
+        self._llm = None
+
+    def _get_llm(self):
+        if self._llm is None:
+            self._llm_service = self._llm_service or LLMService()
+            self._llm = self._llm_service.get_llm()
+        return self._llm
 
     def __call__(self, state: AgentState):
         """
@@ -82,7 +88,7 @@ class RouterNode:
         # 使用 partial 注入 format_instructions，这样其中的花括号不会被再次解析
         prompt = prompt.partial(format_instructions=parser.get_format_instructions())
         
-        chain = prompt | self.llm | parser
+        chain = prompt | self._get_llm() | parser
         
         logger.info(f"Routing user input: {user_input[:50]}...")
         try:

@@ -1,0 +1,1082 @@
+[
+  {
+    "table_name": "用户_table_0",
+    "schema_name": "dw",
+    "table_comment": "用户域核心业务表，记录用户域相关业务数据",
+    "business_domain": "用户域",
+    "data_source": "ODS用户系统",
+    "is_fact_table": true,
+    "text": "\n表名：用户_table_0\n数据库：dw\n业务域：用户域\n数据源：ODS用户系统\n是否事实表：是\n描述：用户域核心业务表，记录用户域相关业务数据\n"
+  },
+  {
+    "table_name": "库存_table_1",
+    "schema_name": "dw",
+    "table_comment": "库存域核心业务表，记录库存域相关业务数据",
+    "business_domain": "库存域",
+    "data_source": "ERP系统",
+    "is_fact_table": false,
+    "text": "\n表名：库存_table_1\n数据库：dw\n业务域：库存域\n数据源：ERP系统\n是否事实表：否\n描述：库存域核心业务表，记录库存域相关业务数据\n"
+  },
+  {
+    "table_name": "订单_table_2",
+    "schema_name": "dw",
+    "table_comment": "订单域核心业务表，记录订单域相关业务数据",
+    "business_domain": "订单域",
+    "data_source": "ODS销售系统",
+    "is_fact_table": false,
+    "text": "\n表名：订单_table_2\n数据库：dw\n业务域：订单域\n数据源：ODS销售系统\n是否事实表：否\n描述：订单域核心业务表，记录订单域相关业务数据\n"
+  },
+  {
+    "table_name": "订单_table_3",
+    "schema_name": "dw",
+    "table_comment": "订单域核心业务表，记录订单域相关业务数据",
+    "business_domain": "订单域",
+    "data_source": "ODS订单系统",
+    "is_fact_table": false,
+    "text": "\n表名：订单_table_3\n数据库：dw\n业务域：订单域\n数据源：ODS订单系统\n是否事实表：否\n描述：订单域核心业务表，记录订单域相关业务数据\n"
+  },
+  {
+    "table_name": "供应_table_4",
+    "schema_name": "dw",
+    "table_comment": "供应链域核心业务表，记录供应链域相关业务数据",
+    "business_domain": "供应链域",
+    "data_source": "ODS用户系统",
+    "is_fact_table": true,
+    "text": "\n表名：供应_table_4\n数据库：dw\n业务域：供应链域\n数据源：ODS用户系统\n是否事实表：是\n描述：供应链域核心业务表，记录供应链域相关业务数据\n"
+  },
+  {
+    "table_name": "财务_table_5",
+    "schema_name": "dw",
+    "table_comment": "财务域核心业务表，记录财务域相关业务数据",
+    "business_domain": "财务域",
+    "data_source": "ODS销售系统",
+    "is_fact_table": true,
+    "text": "\n表名：财务_table_5\n数据库：dw\n业务域：财务域\n数据源：ODS销售系统\n是否事实表：是\n描述：财务域核心业务表，记录财务域相关业务数据\n"
+  },
+  {
+    "table_name": "营销_table_6",
+    "schema_name": "dw",
+    "table_comment": "营销域核心业务表，记录营销域相关业务数据",
+    "business_domain": "营销域",
+    "data_source": "ODS用户系统",
+    "is_fact_table": false,
+    "text": "\n表名：营销_table_6\n数据库：dw\n业务域：营销域\n数据源：ODS用户系统\n是否事实表：否\n描述：营销域核心业务表，记录营销域相关业务数据\n"
+  },
+  {
+    "table_name": "销售_table_7",
+    "schema_name": "dw",
+    "table_comment": "销售域核心业务表，记录销售域相关业务数据",
+    "business_domain": "销售域",
+    "data_source": "ERP系统",
+    "is_fact_table": false,
+    "text": "\n表名：销售_table_7\n数据库：dw\n业务域：销售域\n数据源：ERP系统\n是否事实表：否\n描述：销售域核心业务表，记录销售域相关业务数据\n"
+  },
+  {
+    "table_name": "财务_table_8",
+    "schema_name": "dw",
+    "table_comment": "财务域核心业务表，记录财务域相关业务数据",
+    "business_domain": "财务域",
+    "data_source": "ODS销售系统",
+    "is_fact_table": false,
+    "text": "\n表名：财务_table_8\n数据库：dw\n业务域：财务域\n数据源：ODS销售系统\n是否事实表：否\n描述：财务域核心业务表，记录财务域相关业务数据\n"
+  },
+  {
+    "table_name": "营销_table_9",
+    "schema_name": "dw",
+    "table_comment": "营销域核心业务表，记录营销域相关业务数据",
+    "business_domain": "营销域",
+    "data_source": "ODS用户系统",
+    "is_fact_table": false,
+    "text": "\n表名：营销_table_9\n数据库：dw\n业务域：营销域\n数据源：ODS用户系统\n是否事实表：否\n描述：营销域核心业务表，记录营销域相关业务数据\n"
+  },
+  {
+    "table_name": "订单_table_10",
+    "schema_name": "dw",
+    "table_comment": "订单域核心业务表，记录订单域相关业务数据",
+    "business_domain": "订单域",
+    "data_source": "CRM系统",
+    "is_fact_table": true,
+    "text": "\n表名：订单_table_10\n数据库：dw\n业务域：订单域\n数据源：CRM系统\n是否事实表：是\n描述：订单域核心业务表，记录订单域相关业务数据\n"
+  },
+  {
+    "table_name": "库存_table_11",
+    "schema_name": "dw",
+    "table_comment": "库存域核心业务表，记录库存域相关业务数据",
+    "business_domain": "库存域",
+    "data_source": "ODS用户系统",
+    "is_fact_table": true,
+    "text": "\n表名：库存_table_11\n数据库：dw\n业务域：库存域\n数据源：ODS用户系统\n是否事实表：是\n描述：库存域核心业务表，记录库存域相关业务数据\n"
+  },
+  {
+    "table_name": "营销_table_12",
+    "schema_name": "dw",
+    "table_comment": "营销域核心业务表，记录营销域相关业务数据",
+    "business_domain": "营销域",
+    "data_source": "ODS用户系统",
+    "is_fact_table": true,
+    "text": "\n表名：营销_table_12\n数据库：dw\n业务域：营销域\n数据源：ODS用户系统\n是否事实表：是\n描述：营销域核心业务表，记录营销域相关业务数据\n"
+  },
+  {
+    "table_name": "供应_table_13",
+    "schema_name": "dw",
+    "table_comment": "供应链域核心业务表，记录供应链域相关业务数据",
+    "business_domain": "供应链域",
+    "data_source": "CRM系统",
+    "is_fact_table": true,
+    "text": "\n表名：供应_table_13\n数据库：dw\n业务域：供应链域\n数据源：CRM系统\n是否事实表：是\n描述：供应链域核心业务表，记录供应链域相关业务数据\n"
+  },
+  {
+    "table_name": "物流_table_14",
+    "schema_name": "dw",
+    "table_comment": "物流域核心业务表，记录物流域相关业务数据",
+    "business_domain": "物流域",
+    "data_source": "ERP系统",
+    "is_fact_table": true,
+    "text": "\n表名：物流_table_14\n数据库：dw\n业务域：物流域\n数据源：ERP系统\n是否事实表：是\n描述：物流域核心业务表，记录物流域相关业务数据\n"
+  },
+  {
+    "table_name": "供应_table_15",
+    "schema_name": "dw",
+    "table_comment": "供应链域核心业务表，记录供应链域相关业务数据",
+    "business_domain": "供应链域",
+    "data_source": "ODS销售系统",
+    "is_fact_table": true,
+    "text": "\n表名：供应_table_15\n数据库：dw\n业务域：供应链域\n数据源：ODS销售系统\n是否事实表：是\n描述：供应链域核心业务表，记录供应链域相关业务数据\n"
+  },
+  {
+    "table_name": "用户_table_16",
+    "schema_name": "dw",
+    "table_comment": "用户域核心业务表，记录用户域相关业务数据",
+    "business_domain": "用户域",
+    "data_source": "ODS订单系统",
+    "is_fact_table": false,
+    "text": "\n表名：用户_table_16\n数据库：dw\n业务域：用户域\n数据源：ODS订单系统\n是否事实表：否\n描述：用户域核心业务表，记录用户域相关业务数据\n"
+  },
+  {
+    "table_name": "营销_table_17",
+    "schema_name": "dw",
+    "table_comment": "营销域核心业务表，记录营销域相关业务数据",
+    "business_domain": "营销域",
+    "data_source": "ERP系统",
+    "is_fact_table": false,
+    "text": "\n表名：营销_table_17\n数据库：dw\n业务域：营销域\n数据源：ERP系统\n是否事实表：否\n描述：营销域核心业务表，记录营销域相关业务数据\n"
+  },
+  {
+    "table_name": "销售_table_18",
+    "schema_name": "dw",
+    "table_comment": "销售域核心业务表，记录销售域相关业务数据",
+    "business_domain": "销售域",
+    "data_source": "ODS订单系统",
+    "is_fact_table": false,
+    "text": "\n表名：销售_table_18\n数据库：dw\n业务域：销售域\n数据源：ODS订单系统\n是否事实表：否\n描述：销售域核心业务表，记录销售域相关业务数据\n"
+  },
+  {
+    "table_name": "订单_table_19",
+    "schema_name": "dw",
+    "table_comment": "订单域核心业务表，记录订单域相关业务数据",
+    "business_domain": "订单域",
+    "data_source": "ERP系统",
+    "is_fact_table": true,
+    "text": "\n表名：订单_table_19\n数据库：dw\n业务域：订单域\n数据源：ERP系统\n是否事实表：是\n描述：订单域核心业务表，记录订单域相关业务数据\n"
+  },
+  {
+    "table_name": "订单_table_20",
+    "schema_name": "dw",
+    "table_comment": "订单域核心业务表，记录订单域相关业务数据",
+    "business_domain": "订单域",
+    "data_source": "ODS用户系统",
+    "is_fact_table": false,
+    "text": "\n表名：订单_table_20\n数据库：dw\n业务域：订单域\n数据源：ODS用户系统\n是否事实表：否\n描述：订单域核心业务表，记录订单域相关业务数据\n"
+  },
+  {
+    "table_name": "订单_table_21",
+    "schema_name": "dw",
+    "table_comment": "订单域核心业务表，记录订单域相关业务数据",
+    "business_domain": "订单域",
+    "data_source": "CRM系统",
+    "is_fact_table": true,
+    "text": "\n表名：订单_table_21\n数据库：dw\n业务域：订单域\n数据源：CRM系统\n是否事实表：是\n描述：订单域核心业务表，记录订单域相关业务数据\n"
+  },
+  {
+    "table_name": "营销_table_22",
+    "schema_name": "dw",
+    "table_comment": "营销域核心业务表，记录营销域相关业务数据",
+    "business_domain": "营销域",
+    "data_source": "CRM系统",
+    "is_fact_table": false,
+    "text": "\n表名：营销_table_22\n数据库：dw\n业务域：营销域\n数据源：CRM系统\n是否事实表：否\n描述：营销域核心业务表，记录营销域相关业务数据\n"
+  },
+  {
+    "table_name": "销售_table_23",
+    "schema_name": "dw",
+    "table_comment": "销售域核心业务表，记录销售域相关业务数据",
+    "business_domain": "销售域",
+    "data_source": "ERP系统",
+    "is_fact_table": true,
+    "text": "\n表名：销售_table_23\n数据库：dw\n业务域：销售域\n数据源：ERP系统\n是否事实表：是\n描述：销售域核心业务表，记录销售域相关业务数据\n"
+  },
+  {
+    "table_name": "物流_table_24",
+    "schema_name": "dw",
+    "table_comment": "物流域核心业务表，记录物流域相关业务数据",
+    "business_domain": "物流域",
+    "data_source": "ODS订单系统",
+    "is_fact_table": false,
+    "text": "\n表名：物流_table_24\n数据库：dw\n业务域：物流域\n数据源：ODS订单系统\n是否事实表：否\n描述：物流域核心业务表，记录物流域相关业务数据\n"
+  },
+  {
+    "table_name": "供应_table_25",
+    "schema_name": "dw",
+    "table_comment": "供应链域核心业务表，记录供应链域相关业务数据",
+    "business_domain": "供应链域",
+    "data_source": "ERP系统",
+    "is_fact_table": true,
+    "text": "\n表名：供应_table_25\n数据库：dw\n业务域：供应链域\n数据源：ERP系统\n是否事实表：是\n描述：供应链域核心业务表，记录供应链域相关业务数据\n"
+  },
+  {
+    "table_name": "供应_table_26",
+    "schema_name": "dw",
+    "table_comment": "供应链域核心业务表，记录供应链域相关业务数据",
+    "business_domain": "供应链域",
+    "data_source": "ODS销售系统",
+    "is_fact_table": false,
+    "text": "\n表名：供应_table_26\n数据库：dw\n业务域：供应链域\n数据源：ODS销售系统\n是否事实表：否\n描述：供应链域核心业务表，记录供应链域相关业务数据\n"
+  },
+  {
+    "table_name": "财务_table_27",
+    "schema_name": "dw",
+    "table_comment": "财务域核心业务表，记录财务域相关业务数据",
+    "business_domain": "财务域",
+    "data_source": "ODS用户系统",
+    "is_fact_table": false,
+    "text": "\n表名：财务_table_27\n数据库：dw\n业务域：财务域\n数据源：ODS用户系统\n是否事实表：否\n描述：财务域核心业务表，记录财务域相关业务数据\n"
+  },
+  {
+    "table_name": "订单_table_28",
+    "schema_name": "dw",
+    "table_comment": "订单域核心业务表，记录订单域相关业务数据",
+    "business_domain": "订单域",
+    "data_source": "CRM系统",
+    "is_fact_table": false,
+    "text": "\n表名：订单_table_28\n数据库：dw\n业务域：订单域\n数据源：CRM系统\n是否事实表：否\n描述：订单域核心业务表，记录订单域相关业务数据\n"
+  },
+  {
+    "table_name": "供应_table_29",
+    "schema_name": "dw",
+    "table_comment": "供应链域核心业务表，记录供应链域相关业务数据",
+    "business_domain": "供应链域",
+    "data_source": "CRM系统",
+    "is_fact_table": false,
+    "text": "\n表名：供应_table_29\n数据库：dw\n业务域：供应链域\n数据源：CRM系统\n是否事实表：否\n描述：供应链域核心业务表，记录供应链域相关业务数据\n"
+  },
+  {
+    "table_name": "订单_table_30",
+    "schema_name": "dw",
+    "table_comment": "订单域核心业务表，记录订单域相关业务数据",
+    "business_domain": "订单域",
+    "data_source": "ODS销售系统",
+    "is_fact_table": false,
+    "text": "\n表名：订单_table_30\n数据库：dw\n业务域：订单域\n数据源：ODS销售系统\n是否事实表：否\n描述：订单域核心业务表，记录订单域相关业务数据\n"
+  },
+  {
+    "table_name": "物流_table_31",
+    "schema_name": "dw",
+    "table_comment": "物流域核心业务表，记录物流域相关业务数据",
+    "business_domain": "物流域",
+    "data_source": "ODS订单系统",
+    "is_fact_table": false,
+    "text": "\n表名：物流_table_31\n数据库：dw\n业务域：物流域\n数据源：ODS订单系统\n是否事实表：否\n描述：物流域核心业务表，记录物流域相关业务数据\n"
+  },
+  {
+    "table_name": "用户_table_32",
+    "schema_name": "dw",
+    "table_comment": "用户域核心业务表，记录用户域相关业务数据",
+    "business_domain": "用户域",
+    "data_source": "ODS订单系统",
+    "is_fact_table": true,
+    "text": "\n表名：用户_table_32\n数据库：dw\n业务域：用户域\n数据源：ODS订单系统\n是否事实表：是\n描述：用户域核心业务表，记录用户域相关业务数据\n"
+  },
+  {
+    "table_name": "订单_table_33",
+    "schema_name": "dw",
+    "table_comment": "订单域核心业务表，记录订单域相关业务数据",
+    "business_domain": "订单域",
+    "data_source": "CRM系统",
+    "is_fact_table": true,
+    "text": "\n表名：订单_table_33\n数据库：dw\n业务域：订单域\n数据源：CRM系统\n是否事实表：是\n描述：订单域核心业务表，记录订单域相关业务数据\n"
+  },
+  {
+    "table_name": "订单_table_34",
+    "schema_name": "dw",
+    "table_comment": "订单域核心业务表，记录订单域相关业务数据",
+    "business_domain": "订单域",
+    "data_source": "ERP系统",
+    "is_fact_table": false,
+    "text": "\n表名：订单_table_34\n数据库：dw\n业务域：订单域\n数据源：ERP系统\n是否事实表：否\n描述：订单域核心业务表，记录订单域相关业务数据\n"
+  },
+  {
+    "table_name": "营销_table_35",
+    "schema_name": "dw",
+    "table_comment": "营销域核心业务表，记录营销域相关业务数据",
+    "business_domain": "营销域",
+    "data_source": "ODS订单系统",
+    "is_fact_table": false,
+    "text": "\n表名：营销_table_35\n数据库：dw\n业务域：营销域\n数据源：ODS订单系统\n是否事实表：否\n描述：营销域核心业务表，记录营销域相关业务数据\n"
+  },
+  {
+    "table_name": "库存_table_36",
+    "schema_name": "dw",
+    "table_comment": "库存域核心业务表，记录库存域相关业务数据",
+    "business_domain": "库存域",
+    "data_source": "ODS用户系统",
+    "is_fact_table": true,
+    "text": "\n表名：库存_table_36\n数据库：dw\n业务域：库存域\n数据源：ODS用户系统\n是否事实表：是\n描述：库存域核心业务表，记录库存域相关业务数据\n"
+  },
+  {
+    "table_name": "营销_table_37",
+    "schema_name": "dw",
+    "table_comment": "营销域核心业务表，记录营销域相关业务数据",
+    "business_domain": "营销域",
+    "data_source": "ODS用户系统",
+    "is_fact_table": false,
+    "text": "\n表名：营销_table_37\n数据库：dw\n业务域：营销域\n数据源：ODS用户系统\n是否事实表：否\n描述：营销域核心业务表，记录营销域相关业务数据\n"
+  },
+  {
+    "table_name": "财务_table_38",
+    "schema_name": "dw",
+    "table_comment": "财务域核心业务表，记录财务域相关业务数据",
+    "business_domain": "财务域",
+    "data_source": "ODS销售系统",
+    "is_fact_table": false,
+    "text": "\n表名：财务_table_38\n数据库：dw\n业务域：财务域\n数据源：ODS销售系统\n是否事实表：否\n描述：财务域核心业务表，记录财务域相关业务数据\n"
+  },
+  {
+    "table_name": "库存_table_39",
+    "schema_name": "dw",
+    "table_comment": "库存域核心业务表，记录库存域相关业务数据",
+    "business_domain": "库存域",
+    "data_source": "CRM系统",
+    "is_fact_table": false,
+    "text": "\n表名：库存_table_39\n数据库：dw\n业务域：库存域\n数据源：CRM系统\n是否事实表：否\n描述：库存域核心业务表，记录库存域相关业务数据\n"
+  },
+  {
+    "table_name": "库存_table_40",
+    "schema_name": "dw",
+    "table_comment": "库存域核心业务表，记录库存域相关业务数据",
+    "business_domain": "库存域",
+    "data_source": "ODS订单系统",
+    "is_fact_table": false,
+    "text": "\n表名：库存_table_40\n数据库：dw\n业务域：库存域\n数据源：ODS订单系统\n是否事实表：否\n描述：库存域核心业务表，记录库存域相关业务数据\n"
+  },
+  {
+    "table_name": "销售_table_41",
+    "schema_name": "dw",
+    "table_comment": "销售域核心业务表，记录销售域相关业务数据",
+    "business_domain": "销售域",
+    "data_source": "CRM系统",
+    "is_fact_table": false,
+    "text": "\n表名：销售_table_41\n数据库：dw\n业务域：销售域\n数据源：CRM系统\n是否事实表：否\n描述：销售域核心业务表，记录销售域相关业务数据\n"
+  },
+  {
+    "table_name": "物流_table_42",
+    "schema_name": "dw",
+    "table_comment": "物流域核心业务表，记录物流域相关业务数据",
+    "business_domain": "物流域",
+    "data_source": "ODS订单系统",
+    "is_fact_table": true,
+    "text": "\n表名：物流_table_42\n数据库：dw\n业务域：物流域\n数据源：ODS订单系统\n是否事实表：是\n描述：物流域核心业务表，记录物流域相关业务数据\n"
+  },
+  {
+    "table_name": "财务_table_43",
+    "schema_name": "dw",
+    "table_comment": "财务域核心业务表，记录财务域相关业务数据",
+    "business_domain": "财务域",
+    "data_source": "ERP系统",
+    "is_fact_table": false,
+    "text": "\n表名：财务_table_43\n数据库：dw\n业务域：财务域\n数据源：ERP系统\n是否事实表：否\n描述：财务域核心业务表，记录财务域相关业务数据\n"
+  },
+  {
+    "table_name": "销售_table_44",
+    "schema_name": "dw",
+    "table_comment": "销售域核心业务表，记录销售域相关业务数据",
+    "business_domain": "销售域",
+    "data_source": "ODS用户系统",
+    "is_fact_table": false,
+    "text": "\n表名：销售_table_44\n数据库：dw\n业务域：销售域\n数据源：ODS用户系统\n是否事实表：否\n描述：销售域核心业务表，记录销售域相关业务数据\n"
+  },
+  {
+    "table_name": "销售_table_45",
+    "schema_name": "dw",
+    "table_comment": "销售域核心业务表，记录销售域相关业务数据",
+    "business_domain": "销售域",
+    "data_source": "ODS销售系统",
+    "is_fact_table": true,
+    "text": "\n表名：销售_table_45\n数据库：dw\n业务域：销售域\n数据源：ODS销售系统\n是否事实表：是\n描述：销售域核心业务表，记录销售域相关业务数据\n"
+  },
+  {
+    "table_name": "销售_table_46",
+    "schema_name": "dw",
+    "table_comment": "销售域核心业务表，记录销售域相关业务数据",
+    "business_domain": "销售域",
+    "data_source": "ODS订单系统",
+    "is_fact_table": true,
+    "text": "\n表名：销售_table_46\n数据库：dw\n业务域：销售域\n数据源：ODS订单系统\n是否事实表：是\n描述：销售域核心业务表，记录销售域相关业务数据\n"
+  },
+  {
+    "table_name": "销售_table_47",
+    "schema_name": "dw",
+    "table_comment": "销售域核心业务表，记录销售域相关业务数据",
+    "business_domain": "销售域",
+    "data_source": "ODS订单系统",
+    "is_fact_table": false,
+    "text": "\n表名：销售_table_47\n数据库：dw\n业务域：销售域\n数据源：ODS订单系统\n是否事实表：否\n描述：销售域核心业务表，记录销售域相关业务数据\n"
+  },
+  {
+    "table_name": "财务_table_48",
+    "schema_name": "dw",
+    "table_comment": "财务域核心业务表，记录财务域相关业务数据",
+    "business_domain": "财务域",
+    "data_source": "ODS销售系统",
+    "is_fact_table": false,
+    "text": "\n表名：财务_table_48\n数据库：dw\n业务域：财务域\n数据源：ODS销售系统\n是否事实表：否\n描述：财务域核心业务表，记录财务域相关业务数据\n"
+  },
+  {
+    "table_name": "营销_table_49",
+    "schema_name": "dw",
+    "table_comment": "营销域核心业务表，记录营销域相关业务数据",
+    "business_domain": "营销域",
+    "data_source": "ODS订单系统",
+    "is_fact_table": false,
+    "text": "\n表名：营销_table_49\n数据库：dw\n业务域：营销域\n数据源：ODS订单系统\n是否事实表：否\n描述：营销域核心业务表，记录营销域相关业务数据\n"
+  },
+  {
+    "table_name": "订单_table_50",
+    "schema_name": "dw",
+    "table_comment": "订单域核心业务表，记录订单域相关业务数据",
+    "business_domain": "订单域",
+    "data_source": "ERP系统",
+    "is_fact_table": true,
+    "text": "\n表名：订单_table_50\n数据库：dw\n业务域：订单域\n数据源：ERP系统\n是否事实表：是\n描述：订单域核心业务表，记录订单域相关业务数据\n"
+  },
+  {
+    "table_name": "库存_table_51",
+    "schema_name": "dw",
+    "table_comment": "库存域核心业务表，记录库存域相关业务数据",
+    "business_domain": "库存域",
+    "data_source": "ERP系统",
+    "is_fact_table": false,
+    "text": "\n表名：库存_table_51\n数据库：dw\n业务域：库存域\n数据源：ERP系统\n是否事实表：否\n描述：库存域核心业务表，记录库存域相关业务数据\n"
+  },
+  {
+    "table_name": "库存_table_52",
+    "schema_name": "dw",
+    "table_comment": "库存域核心业务表，记录库存域相关业务数据",
+    "business_domain": "库存域",
+    "data_source": "ODS用户系统",
+    "is_fact_table": true,
+    "text": "\n表名：库存_table_52\n数据库：dw\n业务域：库存域\n数据源：ODS用户系统\n是否事实表：是\n描述：库存域核心业务表，记录库存域相关业务数据\n"
+  },
+  {
+    "table_name": "物流_table_53",
+    "schema_name": "dw",
+    "table_comment": "物流域核心业务表，记录物流域相关业务数据",
+    "business_domain": "物流域",
+    "data_source": "ODS订单系统",
+    "is_fact_table": true,
+    "text": "\n表名：物流_table_53\n数据库：dw\n业务域：物流域\n数据源：ODS订单系统\n是否事实表：是\n描述：物流域核心业务表，记录物流域相关业务数据\n"
+  },
+  {
+    "table_name": "供应_table_54",
+    "schema_name": "dw",
+    "table_comment": "供应链域核心业务表，记录供应链域相关业务数据",
+    "business_domain": "供应链域",
+    "data_source": "ODS销售系统",
+    "is_fact_table": false,
+    "text": "\n表名：供应_table_54\n数据库：dw\n业务域：供应链域\n数据源：ODS销售系统\n是否事实表：否\n描述：供应链域核心业务表，记录供应链域相关业务数据\n"
+  },
+  {
+    "table_name": "订单_table_55",
+    "schema_name": "dw",
+    "table_comment": "订单域核心业务表，记录订单域相关业务数据",
+    "business_domain": "订单域",
+    "data_source": "ODS销售系统",
+    "is_fact_table": true,
+    "text": "\n表名：订单_table_55\n数据库：dw\n业务域：订单域\n数据源：ODS销售系统\n是否事实表：是\n描述：订单域核心业务表，记录订单域相关业务数据\n"
+  },
+  {
+    "table_name": "库存_table_56",
+    "schema_name": "dw",
+    "table_comment": "库存域核心业务表，记录库存域相关业务数据",
+    "business_domain": "库存域",
+    "data_source": "ODS销售系统",
+    "is_fact_table": true,
+    "text": "\n表名：库存_table_56\n数据库：dw\n业务域：库存域\n数据源：ODS销售系统\n是否事实表：是\n描述：库存域核心业务表，记录库存域相关业务数据\n"
+  },
+  {
+    "table_name": "用户_table_57",
+    "schema_name": "dw",
+    "table_comment": "用户域核心业务表，记录用户域相关业务数据",
+    "business_domain": "用户域",
+    "data_source": "ERP系统",
+    "is_fact_table": true,
+    "text": "\n表名：用户_table_57\n数据库：dw\n业务域：用户域\n数据源：ERP系统\n是否事实表：是\n描述：用户域核心业务表，记录用户域相关业务数据\n"
+  },
+  {
+    "table_name": "财务_table_58",
+    "schema_name": "dw",
+    "table_comment": "财务域核心业务表，记录财务域相关业务数据",
+    "business_domain": "财务域",
+    "data_source": "ERP系统",
+    "is_fact_table": false,
+    "text": "\n表名：财务_table_58\n数据库：dw\n业务域：财务域\n数据源：ERP系统\n是否事实表：否\n描述：财务域核心业务表，记录财务域相关业务数据\n"
+  },
+  {
+    "table_name": "物流_table_59",
+    "schema_name": "dw",
+    "table_comment": "物流域核心业务表，记录物流域相关业务数据",
+    "business_domain": "物流域",
+    "data_source": "ODS用户系统",
+    "is_fact_table": false,
+    "text": "\n表名：物流_table_59\n数据库：dw\n业务域：物流域\n数据源：ODS用户系统\n是否事实表：否\n描述：物流域核心业务表，记录物流域相关业务数据\n"
+  },
+  {
+    "table_name": "库存_table_60",
+    "schema_name": "dw",
+    "table_comment": "库存域核心业务表，记录库存域相关业务数据",
+    "business_domain": "库存域",
+    "data_source": "ODS销售系统",
+    "is_fact_table": true,
+    "text": "\n表名：库存_table_60\n数据库：dw\n业务域：库存域\n数据源：ODS销售系统\n是否事实表：是\n描述：库存域核心业务表，记录库存域相关业务数据\n"
+  },
+  {
+    "table_name": "财务_table_61",
+    "schema_name": "dw",
+    "table_comment": "财务域核心业务表，记录财务域相关业务数据",
+    "business_domain": "财务域",
+    "data_source": "ODS订单系统",
+    "is_fact_table": true,
+    "text": "\n表名：财务_table_61\n数据库：dw\n业务域：财务域\n数据源：ODS订单系统\n是否事实表：是\n描述：财务域核心业务表，记录财务域相关业务数据\n"
+  },
+  {
+    "table_name": "用户_table_62",
+    "schema_name": "dw",
+    "table_comment": "用户域核心业务表，记录用户域相关业务数据",
+    "business_domain": "用户域",
+    "data_source": "ODS销售系统",
+    "is_fact_table": true,
+    "text": "\n表名：用户_table_62\n数据库：dw\n业务域：用户域\n数据源：ODS销售系统\n是否事实表：是\n描述：用户域核心业务表，记录用户域相关业务数据\n"
+  },
+  {
+    "table_name": "供应_table_63",
+    "schema_name": "dw",
+    "table_comment": "供应链域核心业务表，记录供应链域相关业务数据",
+    "business_domain": "供应链域",
+    "data_source": "ERP系统",
+    "is_fact_table": true,
+    "text": "\n表名：供应_table_63\n数据库：dw\n业务域：供应链域\n数据源：ERP系统\n是否事实表：是\n描述：供应链域核心业务表，记录供应链域相关业务数据\n"
+  },
+  {
+    "table_name": "用户_table_64",
+    "schema_name": "dw",
+    "table_comment": "用户域核心业务表，记录用户域相关业务数据",
+    "business_domain": "用户域",
+    "data_source": "CRM系统",
+    "is_fact_table": false,
+    "text": "\n表名：用户_table_64\n数据库：dw\n业务域：用户域\n数据源：CRM系统\n是否事实表：否\n描述：用户域核心业务表，记录用户域相关业务数据\n"
+  },
+  {
+    "table_name": "物流_table_65",
+    "schema_name": "dw",
+    "table_comment": "物流域核心业务表，记录物流域相关业务数据",
+    "business_domain": "物流域",
+    "data_source": "ODS订单系统",
+    "is_fact_table": true,
+    "text": "\n表名：物流_table_65\n数据库：dw\n业务域：物流域\n数据源：ODS订单系统\n是否事实表：是\n描述：物流域核心业务表，记录物流域相关业务数据\n"
+  },
+  {
+    "table_name": "供应_table_66",
+    "schema_name": "dw",
+    "table_comment": "供应链域核心业务表，记录供应链域相关业务数据",
+    "business_domain": "供应链域",
+    "data_source": "ODS订单系统",
+    "is_fact_table": true,
+    "text": "\n表名：供应_table_66\n数据库：dw\n业务域：供应链域\n数据源：ODS订单系统\n是否事实表：是\n描述：供应链域核心业务表，记录供应链域相关业务数据\n"
+  },
+  {
+    "table_name": "物流_table_67",
+    "schema_name": "dw",
+    "table_comment": "物流域核心业务表，记录物流域相关业务数据",
+    "business_domain": "物流域",
+    "data_source": "ODS订单系统",
+    "is_fact_table": true,
+    "text": "\n表名：物流_table_67\n数据库：dw\n业务域：物流域\n数据源：ODS订单系统\n是否事实表：是\n描述：物流域核心业务表，记录物流域相关业务数据\n"
+  },
+  {
+    "table_name": "物流_table_68",
+    "schema_name": "dw",
+    "table_comment": "物流域核心业务表，记录物流域相关业务数据",
+    "business_domain": "物流域",
+    "data_source": "ERP系统",
+    "is_fact_table": true,
+    "text": "\n表名：物流_table_68\n数据库：dw\n业务域：物流域\n数据源：ERP系统\n是否事实表：是\n描述：物流域核心业务表，记录物流域相关业务数据\n"
+  },
+  {
+    "table_name": "物流_table_69",
+    "schema_name": "dw",
+    "table_comment": "物流域核心业务表，记录物流域相关业务数据",
+    "business_domain": "物流域",
+    "data_source": "CRM系统",
+    "is_fact_table": false,
+    "text": "\n表名：物流_table_69\n数据库：dw\n业务域：物流域\n数据源：CRM系统\n是否事实表：否\n描述：物流域核心业务表，记录物流域相关业务数据\n"
+  },
+  {
+    "table_name": "库存_table_70",
+    "schema_name": "dw",
+    "table_comment": "库存域核心业务表，记录库存域相关业务数据",
+    "business_domain": "库存域",
+    "data_source": "ODS销售系统",
+    "is_fact_table": false,
+    "text": "\n表名：库存_table_70\n数据库：dw\n业务域：库存域\n数据源：ODS销售系统\n是否事实表：否\n描述：库存域核心业务表，记录库存域相关业务数据\n"
+  },
+  {
+    "table_name": "用户_table_71",
+    "schema_name": "dw",
+    "table_comment": "用户域核心业务表，记录用户域相关业务数据",
+    "business_domain": "用户域",
+    "data_source": "ODS用户系统",
+    "is_fact_table": false,
+    "text": "\n表名：用户_table_71\n数据库：dw\n业务域：用户域\n数据源：ODS用户系统\n是否事实表：否\n描述：用户域核心业务表，记录用户域相关业务数据\n"
+  },
+  {
+    "table_name": "订单_table_72",
+    "schema_name": "dw",
+    "table_comment": "订单域核心业务表，记录订单域相关业务数据",
+    "business_domain": "订单域",
+    "data_source": "ODS订单系统",
+    "is_fact_table": false,
+    "text": "\n表名：订单_table_72\n数据库：dw\n业务域：订单域\n数据源：ODS订单系统\n是否事实表：否\n描述：订单域核心业务表，记录订单域相关业务数据\n"
+  },
+  {
+    "table_name": "财务_table_73",
+    "schema_name": "dw",
+    "table_comment": "财务域核心业务表，记录财务域相关业务数据",
+    "business_domain": "财务域",
+    "data_source": "CRM系统",
+    "is_fact_table": true,
+    "text": "\n表名：财务_table_73\n数据库：dw\n业务域：财务域\n数据源：CRM系统\n是否事实表：是\n描述：财务域核心业务表，记录财务域相关业务数据\n"
+  },
+  {
+    "table_name": "订单_table_74",
+    "schema_name": "dw",
+    "table_comment": "订单域核心业务表，记录订单域相关业务数据",
+    "business_domain": "订单域",
+    "data_source": "ERP系统",
+    "is_fact_table": false,
+    "text": "\n表名：订单_table_74\n数据库：dw\n业务域：订单域\n数据源：ERP系统\n是否事实表：否\n描述：订单域核心业务表，记录订单域相关业务数据\n"
+  },
+  {
+    "table_name": "物流_table_75",
+    "schema_name": "dw",
+    "table_comment": "物流域核心业务表，记录物流域相关业务数据",
+    "business_domain": "物流域",
+    "data_source": "CRM系统",
+    "is_fact_table": true,
+    "text": "\n表名：物流_table_75\n数据库：dw\n业务域：物流域\n数据源：CRM系统\n是否事实表：是\n描述：物流域核心业务表，记录物流域相关业务数据\n"
+  },
+  {
+    "table_name": "用户_table_76",
+    "schema_name": "dw",
+    "table_comment": "用户域核心业务表，记录用户域相关业务数据",
+    "business_domain": "用户域",
+    "data_source": "ERP系统",
+    "is_fact_table": true,
+    "text": "\n表名：用户_table_76\n数据库：dw\n业务域：用户域\n数据源：ERP系统\n是否事实表：是\n描述：用户域核心业务表，记录用户域相关业务数据\n"
+  },
+  {
+    "table_name": "财务_table_77",
+    "schema_name": "dw",
+    "table_comment": "财务域核心业务表，记录财务域相关业务数据",
+    "business_domain": "财务域",
+    "data_source": "ODS用户系统",
+    "is_fact_table": false,
+    "text": "\n表名：财务_table_77\n数据库：dw\n业务域：财务域\n数据源：ODS用户系统\n是否事实表：否\n描述：财务域核心业务表，记录财务域相关业务数据\n"
+  },
+  {
+    "table_name": "库存_table_78",
+    "schema_name": "dw",
+    "table_comment": "库存域核心业务表，记录库存域相关业务数据",
+    "business_domain": "库存域",
+    "data_source": "ERP系统",
+    "is_fact_table": false,
+    "text": "\n表名：库存_table_78\n数据库：dw\n业务域：库存域\n数据源：ERP系统\n是否事实表：否\n描述：库存域核心业务表，记录库存域相关业务数据\n"
+  },
+  {
+    "table_name": "物流_table_79",
+    "schema_name": "dw",
+    "table_comment": "物流域核心业务表，记录物流域相关业务数据",
+    "business_domain": "物流域",
+    "data_source": "ODS订单系统",
+    "is_fact_table": true,
+    "text": "\n表名：物流_table_79\n数据库：dw\n业务域：物流域\n数据源：ODS订单系统\n是否事实表：是\n描述：物流域核心业务表，记录物流域相关业务数据\n"
+  },
+  {
+    "table_name": "订单_table_80",
+    "schema_name": "dw",
+    "table_comment": "订单域核心业务表，记录订单域相关业务数据",
+    "business_domain": "订单域",
+    "data_source": "ODS用户系统",
+    "is_fact_table": false,
+    "text": "\n表名：订单_table_80\n数据库：dw\n业务域：订单域\n数据源：ODS用户系统\n是否事实表：否\n描述：订单域核心业务表，记录订单域相关业务数据\n"
+  },
+  {
+    "table_name": "财务_table_81",
+    "schema_name": "dw",
+    "table_comment": "财务域核心业务表，记录财务域相关业务数据",
+    "business_domain": "财务域",
+    "data_source": "CRM系统",
+    "is_fact_table": false,
+    "text": "\n表名：财务_table_81\n数据库：dw\n业务域：财务域\n数据源：CRM系统\n是否事实表：否\n描述：财务域核心业务表，记录财务域相关业务数据\n"
+  },
+  {
+    "table_name": "物流_table_82",
+    "schema_name": "dw",
+    "table_comment": "物流域核心业务表，记录物流域相关业务数据",
+    "business_domain": "物流域",
+    "data_source": "CRM系统",
+    "is_fact_table": true,
+    "text": "\n表名：物流_table_82\n数据库：dw\n业务域：物流域\n数据源：CRM系统\n是否事实表：是\n描述：物流域核心业务表，记录物流域相关业务数据\n"
+  },
+  {
+    "table_name": "用户_table_83",
+    "schema_name": "dw",
+    "table_comment": "用户域核心业务表，记录用户域相关业务数据",
+    "business_domain": "用户域",
+    "data_source": "ODS销售系统",
+    "is_fact_table": false,
+    "text": "\n表名：用户_table_83\n数据库：dw\n业务域：用户域\n数据源：ODS销售系统\n是否事实表：否\n描述：用户域核心业务表，记录用户域相关业务数据\n"
+  },
+  {
+    "table_name": "供应_table_84",
+    "schema_name": "dw",
+    "table_comment": "供应链域核心业务表，记录供应链域相关业务数据",
+    "business_domain": "供应链域",
+    "data_source": "ODS订单系统",
+    "is_fact_table": true,
+    "text": "\n表名：供应_table_84\n数据库：dw\n业务域：供应链域\n数据源：ODS订单系统\n是否事实表：是\n描述：供应链域核心业务表，记录供应链域相关业务数据\n"
+  },
+  {
+    "table_name": "财务_table_85",
+    "schema_name": "dw",
+    "table_comment": "财务域核心业务表，记录财务域相关业务数据",
+    "business_domain": "财务域",
+    "data_source": "ODS订单系统",
+    "is_fact_table": false,
+    "text": "\n表名：财务_table_85\n数据库：dw\n业务域：财务域\n数据源：ODS订单系统\n是否事实表：否\n描述：财务域核心业务表，记录财务域相关业务数据\n"
+  },
+  {
+    "table_name": "销售_table_86",
+    "schema_name": "dw",
+    "table_comment": "销售域核心业务表，记录销售域相关业务数据",
+    "business_domain": "销售域",
+    "data_source": "ODS用户系统",
+    "is_fact_table": true,
+    "text": "\n表名：销售_table_86\n数据库：dw\n业务域：销售域\n数据源：ODS用户系统\n是否事实表：是\n描述：销售域核心业务表，记录销售域相关业务数据\n"
+  },
+  {
+    "table_name": "供应_table_87",
+    "schema_name": "dw",
+    "table_comment": "供应链域核心业务表，记录供应链域相关业务数据",
+    "business_domain": "供应链域",
+    "data_source": "ODS订单系统",
+    "is_fact_table": false,
+    "text": "\n表名：供应_table_87\n数据库：dw\n业务域：供应链域\n数据源：ODS订单系统\n是否事实表：否\n描述：供应链域核心业务表，记录供应链域相关业务数据\n"
+  },
+  {
+    "table_name": "销售_table_88",
+    "schema_name": "dw",
+    "table_comment": "销售域核心业务表，记录销售域相关业务数据",
+    "business_domain": "销售域",
+    "data_source": "ODS用户系统",
+    "is_fact_table": true,
+    "text": "\n表名：销售_table_88\n数据库：dw\n业务域：销售域\n数据源：ODS用户系统\n是否事实表：是\n描述：销售域核心业务表，记录销售域相关业务数据\n"
+  },
+  {
+    "table_name": "物流_table_89",
+    "schema_name": "dw",
+    "table_comment": "物流域核心业务表，记录物流域相关业务数据",
+    "business_domain": "物流域",
+    "data_source": "CRM系统",
+    "is_fact_table": false,
+    "text": "\n表名：物流_table_89\n数据库：dw\n业务域：物流域\n数据源：CRM系统\n是否事实表：否\n描述：物流域核心业务表，记录物流域相关业务数据\n"
+  },
+  {
+    "table_name": "销售_table_90",
+    "schema_name": "dw",
+    "table_comment": "销售域核心业务表，记录销售域相关业务数据",
+    "business_domain": "销售域",
+    "data_source": "ODS用户系统",
+    "is_fact_table": true,
+    "text": "\n表名：销售_table_90\n数据库：dw\n业务域：销售域\n数据源：ODS用户系统\n是否事实表：是\n描述：销售域核心业务表，记录销售域相关业务数据\n"
+  },
+  {
+    "table_name": "财务_table_91",
+    "schema_name": "dw",
+    "table_comment": "财务域核心业务表，记录财务域相关业务数据",
+    "business_domain": "财务域",
+    "data_source": "ERP系统",
+    "is_fact_table": true,
+    "text": "\n表名：财务_table_91\n数据库：dw\n业务域：财务域\n数据源：ERP系统\n是否事实表：是\n描述：财务域核心业务表，记录财务域相关业务数据\n"
+  },
+  {
+    "table_name": "库存_table_92",
+    "schema_name": "dw",
+    "table_comment": "库存域核心业务表，记录库存域相关业务数据",
+    "business_domain": "库存域",
+    "data_source": "CRM系统",
+    "is_fact_table": false,
+    "text": "\n表名：库存_table_92\n数据库：dw\n业务域：库存域\n数据源：CRM系统\n是否事实表：否\n描述：库存域核心业务表，记录库存域相关业务数据\n"
+  },
+  {
+    "table_name": "销售_table_93",
+    "schema_name": "dw",
+    "table_comment": "销售域核心业务表，记录销售域相关业务数据",
+    "business_domain": "销售域",
+    "data_source": "ERP系统",
+    "is_fact_table": true,
+    "text": "\n表名：销售_table_93\n数据库：dw\n业务域：销售域\n数据源：ERP系统\n是否事实表：是\n描述：销售域核心业务表，记录销售域相关业务数据\n"
+  },
+  {
+    "table_name": "订单_table_94",
+    "schema_name": "dw",
+    "table_comment": "订单域核心业务表，记录订单域相关业务数据",
+    "business_domain": "订单域",
+    "data_source": "ERP系统",
+    "is_fact_table": false,
+    "text": "\n表名：订单_table_94\n数据库：dw\n业务域：订单域\n数据源：ERP系统\n是否事实表：否\n描述：订单域核心业务表，记录订单域相关业务数据\n"
+  },
+  {
+    "table_name": "订单_table_95",
+    "schema_name": "dw",
+    "table_comment": "订单域核心业务表，记录订单域相关业务数据",
+    "business_domain": "订单域",
+    "data_source": "CRM系统",
+    "is_fact_table": false,
+    "text": "\n表名：订单_table_95\n数据库：dw\n业务域：订单域\n数据源：CRM系统\n是否事实表：否\n描述：订单域核心业务表，记录订单域相关业务数据\n"
+  },
+  {
+    "table_name": "物流_table_96",
+    "schema_name": "dw",
+    "table_comment": "物流域核心业务表，记录物流域相关业务数据",
+    "business_domain": "物流域",
+    "data_source": "ODS订单系统",
+    "is_fact_table": true,
+    "text": "\n表名：物流_table_96\n数据库：dw\n业务域：物流域\n数据源：ODS订单系统\n是否事实表：是\n描述：物流域核心业务表，记录物流域相关业务数据\n"
+  },
+  {
+    "table_name": "供应_table_97",
+    "schema_name": "dw",
+    "table_comment": "供应链域核心业务表，记录供应链域相关业务数据",
+    "business_domain": "供应链域",
+    "data_source": "ODS订单系统",
+    "is_fact_table": false,
+    "text": "\n表名：供应_table_97\n数据库：dw\n业务域：供应链域\n数据源：ODS订单系统\n是否事实表：否\n描述：供应链域核心业务表，记录供应链域相关业务数据\n"
+  },
+  {
+    "table_name": "营销_table_98",
+    "schema_name": "dw",
+    "table_comment": "营销域核心业务表，记录营销域相关业务数据",
+    "business_domain": "营销域",
+    "data_source": "ODS销售系统",
+    "is_fact_table": false,
+    "text": "\n表名：营销_table_98\n数据库：dw\n业务域：营销域\n数据源：ODS销售系统\n是否事实表：否\n描述：营销域核心业务表，记录营销域相关业务数据\n"
+  },
+  {
+    "table_name": "用户_table_99",
+    "schema_name": "dw",
+    "table_comment": "用户域核心业务表，记录用户域相关业务数据",
+    "business_domain": "用户域",
+    "data_source": "ERP系统",
+    "is_fact_table": false,
+    "text": "\n表名：用户_table_99\n数据库：dw\n业务域：用户域\n数据源：ERP系统\n是否事实表：否\n描述：用户域核心业务表，记录用户域相关业务数据\n"
+  },
+  {
+    "table_name": "供应_table_100",
+    "schema_name": "dw",
+    "table_comment": "供应链域核心业务表，记录供应链域相关业务数据",
+    "business_domain": "供应链域",
+    "data_source": "ERP系统",
+    "is_fact_table": false,
+    "text": "\n表名：供应_table_100\n数据库：dw\n业务域：供应链域\n数据源：ERP系统\n是否事实表：否\n描述：供应链域核心业务表，记录供应链域相关业务数据\n"
+  },
+  {
+    "table_name": "库存_table_101",
+    "schema_name": "dw",
+    "table_comment": "库存域核心业务表，记录库存域相关业务数据",
+    "business_domain": "库存域",
+    "data_source": "ERP系统",
+    "is_fact_table": false,
+    "text": "\n表名：库存_table_101\n数据库：dw\n业务域：库存域\n数据源：ERP系统\n是否事实表：否\n描述：库存域核心业务表，记录库存域相关业务数据\n"
+  },
+  {
+    "table_name": "供应_table_102",
+    "schema_name": "dw",
+    "table_comment": "供应链域核心业务表，记录供应链域相关业务数据",
+    "business_domain": "供应链域",
+    "data_source": "ODS用户系统",
+    "is_fact_table": false,
+    "text": "\n表名：供应_table_102\n数据库：dw\n业务域：供应链域\n数据源：ODS用户系统\n是否事实表：否\n描述：供应链域核心业务表，记录供应链域相关业务数据\n"
+  },
+  {
+    "table_name": "用户_table_103",
+    "schema_name": "dw",
+    "table_comment": "用户域核心业务表，记录用户域相关业务数据",
+    "business_domain": "用户域",
+    "data_source": "CRM系统",
+    "is_fact_table": true,
+    "text": "\n表名：用户_table_103\n数据库：dw\n业务域：用户域\n数据源：CRM系统\n是否事实表：是\n描述：用户域核心业务表，记录用户域相关业务数据\n"
+  },
+  {
+    "table_name": "库存_table_104",
+    "schema_name": "dw",
+    "table_comment": "库存域核心业务表，记录库存域相关业务数据",
+    "business_domain": "库存域",
+    "data_source": "ODS销售系统",
+    "is_fact_table": false,
+    "text": "\n表名：库存_table_104\n数据库：dw\n业务域：库存域\n数据源：ODS销售系统\n是否事实表：否\n描述：库存域核心业务表，记录库存域相关业务数据\n"
+  },
+  {
+    "table_name": "物流_table_105",
+    "schema_name": "dw",
+    "table_comment": "物流域核心业务表，记录物流域相关业务数据",
+    "business_domain": "物流域",
+    "data_source": "CRM系统",
+    "is_fact_table": true,
+    "text": "\n表名：物流_table_105\n数据库：dw\n业务域：物流域\n数据源：CRM系统\n是否事实表：是\n描述：物流域核心业务表，记录物流域相关业务数据\n"
+  },
+  {
+    "table_name": "销售_table_106",
+    "schema_name": "dw",
+    "table_comment": "销售域核心业务表，记录销售域相关业务数据",
+    "business_domain": "销售域",
+    "data_source": "ODS用户系统",
+    "is_fact_table": true,
+    "text": "\n表名：销售_table_106\n数据库：dw\n业务域：销售域\n数据源：ODS用户系统\n是否事实表：是\n描述：销售域核心业务表，记录销售域相关业务数据\n"
+  },
+  {
+    "table_name": "销售_table_107",
+    "schema_name": "dw",
+    "table_comment": "销售域核心业务表，记录销售域相关业务数据",
+    "business_domain": "销售域",
+    "data_source": "ODS订单系统",
+    "is_fact_table": true,
+    "text": "\n表名：销售_table_107\n数据库：dw\n业务域：销售域\n数据源：ODS订单系统\n是否事实表：是\n描述：销售域核心业务表，记录销售域相关业务数据\n"
+  },
+  {
+    "table_name": "用户_table_108",
+    "schema_name": "dw",
+    "table_comment": "用户域核心业务表，记录用户域相关业务数据",
+    "business_domain": "用户域",
+    "data_source": "ODS订单系统",
+    "is_fact_table": true,
+    "text": "\n表名：用户_table_108\n数据库：dw\n业务域：用户域\n数据源：ODS订单系统\n是否事实表：是\n描述：用户域核心业务表，记录用户域相关业务数据\n"
+  },
+  {
+    "table_name": "销售_table_109",
+    "schema_name": "dw",
+    "table_comment": "销售域核心业务表，记录销售域相关业务数据",
+    "business_domain": "销售域",
+    "data_source": "ODS订单系统",
+    "is_fact_table": false,
+    "text": "\n表名：销售_table_109\n数据库：dw\n业务域：销售域\n数据源：ODS订单系统\n是否事实表：否\n描述：销售域核心业务表，记录销售域相关业务数据\n"
+  },
+  {
+    "table_name": "销售_table_110",
+    "schema_name": "dw",
+    "table_comment": "销售域核心业务表，记录销售域相关业务数据",
+    "business_domain": "销售域",
+    "data_source": "ODS用户系统",
+    "is_fact_table": true,
+    "text": "\n表名：销售_table_110\n数据库：dw\n业务域：销售域\n数据源：ODS用户系统\n是否事实表：是\n描述：销售域核心业务表，记录销售域相关业务数据\n"
+  },
+  {
+    "table_name": "库存_table_111",
+    "schema_name": "dw",
+    "table_comment": "库存域核心业务表，记录库存域相关业务数据",
+    "business_domain": "库存域",
+    "data_source": "ODS订单系统",
+    "is_fact_table": true,
+    "text": "\n表名：库存_table_111\n数据库：dw\n业务域：库存域\n数据源：ODS订单系统\n是否事实表：是\n描述：库存域核心业务表，记录库存域相关业务数据\n"
+  },
+  {
+    "table_name": "库存_table_112",
+    "schema_name": "dw",
+    "table_comment": "库存域核心业务表，记录库存域相关业务数据",
+    "business_domain": "库存域",
+    "data_source": "ODS销售系统",
+    "is_fact_table": true,
+    "text": "\n表名：库存_table_112\n数据库：dw\n业务域：库存域\n数据源：ODS销售系统\n是否事实表：是\n描述：库存域核心业务表，记录库存域相关业务数据\n"
+  },
+  {
+    "table_name": "供应_table_113",
+    "schema_name": "dw",
+    "table_comment": "供应链域核心业务表，记录供应链域相关业务数据",
+    "business_domain": "供应链域",
+    "data_source": "ODS订单系统",
+    "is_fact_table": true,
+    "text": "\n表名：供应_table_113\n数据库：dw\n业务域：供应链域\n数据源：ODS订单系统\n是否事实表：是\n描述：供应链域核心业务表，记录供应链域相关业务数据\n"
+  },
+  {
+    "table_name": "订单_table_114",
+    "schema_name": "dw",
+    "table_comment": "订单域核心业务表，记录订单域相关业务数据",
+    "business_domain": "订单域",
+    "data_source": "ODS销售系统",
+    "is_fact_table": false,
+    "text": "\n表名：订单_table_114\n数据库：dw\n业务域：订单域\n数据源：ODS销售系统\n是否事实表：否\n描述：订单域核心业务表，记录订单域相关业务数据\n"
+  },
+  {
+    "table_name": "用户_table_115",
+    "schema_name": "dw",
+    "table_comment": "用户域核心业务表，记录用户域相关业务数据",
+    "business_domain": "用户域",
+    "data_source": "CRM系统",
+    "is_fact_table": false,
+    "text": "\n表名：用户_table_115\n数据库：dw\n业务域：用户域\n数据源：CRM系统\n是否事实表：否\n描述：用户域核心业务表，记录用户域相关业务数据\n"
+  },
+  {
+    "table_name": "财务_table_116",
+    "schema_name": "dw",
+    "table_comment": "财务域核心业务表，记录财务域相关业务数据",
+    "business_domain": "财务域",
+    "data_source": "ODS销售系统",
+    "is_fact_table": true,
+    "text": "\n表名：财务_table_116\n数据库：dw\n业务域：财务域\n数据源：ODS销售系统\n是否事实表：是\n描述：财务域核心业务表，记录财务域相关业务数据\n"
+  },
+  {
+    "table_name": "订单_table_117",
+    "schema_name": "dw",
+    "table_comment": "订单域核心业务表，记录订单域相关业务数据",
+    "business_domain": "订单域",
+    "data_source": "CRM系统",
+    "is_fact_table": true,
+    "text": "\n表名：订单_table_117\n数据库：dw\n业务域：订单域\n数据源：CRM系统\n是否事实表：是\n描述：订单域核心业务表，记录订单域相关业务数据\n"
+  },
+  {
+    "table_name": "销售_table_118",
+    "schema_name": "dw",
+    "table_comment": "销售域核心业务表，记录销售域相关业务数据",
+    "business_domain": "销售域",
+    "data_source": "ODS销售系统",
+    "is_fact_table": true,
+    "text": "\n表名：销售_table_118\n数据库：dw\n业务域：销售域\n数据源：ODS销售系统\n是否事实表：是\n描述：销售域核心业务表，记录销售域相关业务数据\n"
+  },
+  {
+    "table_name": "营销_table_119",
+    "schema_name": "dw",
+    "table_comment": "营销域核心业务表，记录营销域相关业务数据",
+    "business_domain": "营销域",
+    "data_source": "ERP系统",
+    "is_fact_table": true,
+    "text": "\n表名：营销_table_119\n数据库：dw\n业务域：营销域\n数据源：ERP系统\n是否事实表：是\n描述：营销域核心业务表，记录营销域相关业务数据\n"
+  }
+]

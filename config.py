@@ -13,7 +13,7 @@ class Settings(BaseSettings):
     # -------------------------------------------------------------------------
     # LLM (OpenAI / Compatible) Configuration
     # -------------------------------------------------------------------------
-    OPENAI_API_KEY: str = ""
+    OPENAI_API_KEY: Optional[str] = None
     OPENAI_BASE_URL: str = "https://api.deepseek.com"
     OPENAI_MODEL_NAME: str = "deepseek-chat"
     
@@ -60,6 +60,8 @@ class Settings(BaseSettings):
     REDIS_PORT: int = 6379
     REDIS_DB: int = 1
     REDIS_PASSWORD: Optional[str] = None
+    ENABLE_REDIS_CHECKPOINTER: bool = True
+    REDIS_CONNECT_TIMEOUT_SECONDS: float = 1.5
 
     @property
     def REDIS_URL(self) -> str:
@@ -67,8 +69,10 @@ class Settings(BaseSettings):
             return f"redis://:{self.REDIS_PASSWORD}@{self.REDIS_HOST}:{self.REDIS_PORT}/{self.REDIS_DB}"
         return f"redis://{self.REDIS_HOST}:{self.REDIS_PORT}/{self.REDIS_DB}"
 
-    # 忽略环境变量文件，直接使用上述值（也可以保留环境变量覆盖的能力）
+    # 支持从 .env 和系统环境变量读取配置（系统环境变量优先）
     model_config = SettingsConfigDict(
+        env_file=".env",
+        env_file_encoding="utf-8",
         env_ignore_empty=True, 
         extra="ignore"
     )

@@ -1,5 +1,7 @@
 from langgraph.graph import StateGraph, END
+from langgraph.checkpoint.memory import MemorySaver
 import logging
+import socket
 
 from app.agents.state import AgentState
 from app.agents.nodes.router import router_node
@@ -11,6 +13,39 @@ from app.core.memory.redis_saver import AsyncRedisSaver
 from config import settings
 
 logger = logging.getLogger(__name__)
+
+
+def _can_connect_redis() -> bool:
+    """Fast pre-flight check to avoid hard failing startup when Redis is unavailable."""
+    try:
+        with socket.create_connection(
+            (settings.REDIS_HOST, settings.REDIS_PORT),
+            timeout=settings.REDIS_CONNECT_TIMEOUT_SECONDS,
+        ):
+            return True
+    except OSError:
+        return False
+
+
+def _build_checkpointer():
+    """Prefer Redis in production, but gracefully degrade to in-memory saver."""
+    if not settings.ENABLE_REDIS_CHECKPOINTER:
+        logger.warning("Redis checkpointer disabled by configuration. Using in-memory checkpointer.")
+        return MemorySaver()
+
+    if not _can_connect_redis():
+        logger.warning(
+            "Redis is unreachable at %s. Using in-memory checkpointer.",
+            settings.REDIS_URL,
+        )
+        return MemorySaver()
+
+    logger.info(f"Initializing Redis Checkpointer at {settings.REDIS_URL}")
+    try:
+        return AsyncRedisSaver.from_url(settings.REDIS_URL)
+    except Exception as e:
+        logger.warning("Failed to initialize Redis checkpointer, fallback to memory: %s", e)
+        return MemorySaver()
 
 def route_decision(state: AgentState):
     """
@@ -60,13 +95,7 @@ workflow.add_edge("memory_node", END)
 
 # 编译并添加持久化 Checkpointer
 # -------------------------------------------------------------------------
-# 强制使用 Redis，移除 SQLite 支持以适应生产环境或更复杂的持久化需求
-logger.info(f"Initializing Redis Checkpointer at {settings.REDIS_URL}")
-try:
-    checkpointer = AsyncRedisSaver.from_url(settings.REDIS_URL)
-except Exception as e:
-    logger.critical(f"Failed to connect to Redis: {e}")
-    raise
+checkpointer = _build_checkpointer()
 
 graph = workflow.compile(checkpointer=checkpointer)
 logger.info("Agent Graph compiled successfully.")

@@ -15,7 +15,14 @@ class ChatNode:
     处理非特定任务的闲聊、问答或兜底回复。
     """
     def __init__(self):
-        self.llm = LLMService().get_llm()
+        self._llm_service = None
+        self._llm = None
+
+    def _get_llm(self):
+        if self._llm is None:
+            self._llm_service = self._llm_service or LLMService()
+            self._llm = self._llm_service.get_llm()
+        return self._llm
 
     def __call__(self, state: AgentState):
         """
@@ -43,7 +50,7 @@ class ChatNode:
             ("user", "{input}")
         ])
         
-        chain = prompt | self.llm
+        chain = prompt | self._get_llm()
         
         logger.info(f"Generating chat response for input: {user_input[:50]}...")
         try:

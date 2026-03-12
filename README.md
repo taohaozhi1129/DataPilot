@@ -76,6 +76,10 @@ pip install -r requirements.txt
 
 ### 2. 配置
 所有配置集中在 `config.py`，建议通过环境变量覆盖。
+可直接基于模板创建本地配置：
+```bash
+cp .env.example .env
+```
 至少需要设置：
 - `OPENAI_API_KEY`
 - `OPENAI_BASE_URL`（如使用 OpenAI-compatible 服务）
@@ -83,7 +87,7 @@ pip install -r requirements.txt
 建议设置：
 - `BM25_ANALYZER`（默认 `jieba`，适合中英文混合）
 如已有旧集合，请重建 `metadata_collection` / `template_collection` 以启用 BM25 字段与索引。
-并确保 Redis 与 Milvus 服务已启动。
+并确保 Milvus 服务已启动。Redis 不可用时会自动降级为内存会话存储（不跨重启持久化）。
 
 ### 3. 启动服务
 ```bash

@@ -31,7 +31,15 @@ class TaskNode:
     """
     def __init__(self, rag_service: Optional[RagService] = None, llm_service: Optional[LLMService] = None):
         self.rag_service = rag_service or RagService()
-        self.llm = (llm_service or LLMService()).get_llm()
+        self._llm_service = llm_service
+        self._llm = None
+
+    def _get_llm(self):
+        if self._llm is None:
+            service = self._llm_service or LLMService()
+            self._llm = service.get_llm()
+            self._llm_service = service
+        return self._llm
 
     def __call__(self, state: AgentState):
         """
@@ -95,7 +103,7 @@ class TaskNode:
         ])
         
         # 3. 结构化抽取
-        structured_llm = self.llm.with_structured_output(TaskConfiguration)
+        structured_llm = self._get_llm().with_structured_output(TaskConfiguration)
         chain = prompt | structured_llm
         
         # 这里 user_query 可能是 "我要同步数据" (第一轮) 也可能是 "目标是 Doris" (第二轮)
