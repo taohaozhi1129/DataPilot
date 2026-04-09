@@ -1,0 +1,210 @@
+[
+  {
+    "doc_id": "template::mysql_to_doris_full_sync",
+    "template_code": "mysql_to_doris_full_sync",
+    "template_name": "MySQL 到 Doris 全量同步",
+    "template_type": "SYNC",
+    "business_domain": "通用数据集成",
+    "source_types": ["MYSQL"],
+    "target_types": ["DORIS"],
+    "schedule_modes": ["MANUAL", "DAILY"],
+    "required_slots": ["source_connection", "source_table", "target_connection", "target_table"],
+    "optional_slots": ["where_clause", "schedule", "batch_size"],
+    "slot_schema": {
+      "source_connection": {"type": "string", "description": "源端连接标识"},
+      "source_table": {"type": "string", "description": "源端表名"},
+      "target_connection": {"type": "string", "description": "目标端连接标识"},
+      "target_table": {"type": "string", "description": "目标端表名"},
+      "where_clause": {"type": "string", "description": "可选过滤条件"},
+      "schedule": {"type": "string", "description": "调度表达式"},
+      "batch_size": {"type": "integer", "description": "批量大小"}
+    },
+    "compatibility_rules": {
+      "source_types": ["MYSQL"],
+      "target_types": ["DORIS"],
+      "supports_incremental": false
+    },
+    "default_payload": {
+      "task_type": "SYNC",
+      "mode": "FULL",
+      "batch_size": 5000
+    },
+    "payload_schema": {
+      "type": "object",
+      "required": ["task_type", "mode", "source", "target"],
+      "properties": {
+        "task_type": {"type": "string"},
+        "mode": {"type": "string"},
+        "source": {"type": "object"},
+        "target": {"type": "object"},
+        "where_clause": {"type": "string"},
+        "schedule": {"type": "string"},
+        "batch_size": {"type": "integer"}
+      }
+    },
+    "render_rules": {
+      "source.connection": "$source_connection",
+      "source.table": "$source_table",
+      "target.connection": "$target_connection",
+      "target.table": "$target_table",
+      "where_clause": "$where_clause",
+      "schedule": "$schedule",
+      "batch_size": "$batch_size"
+    },
+    "example_inputs": [
+      "把 mysql 的 orders 表全量同步到 doris",
+      "创建一个 MySQL 到 Doris 的全量同步任务"
+    ],
+    "example_payloads": [
+      {
+        "task_type": "SYNC",
+        "mode": "FULL",
+        "source": {"connection": "mysql_prod", "table": "orders"},
+        "target": {"connection": "doris_warehouse", "table": "orders"}
+      }
+    ],
+    "template_desc": "适用于从 MySQL 表全量同步到 Doris 表的通用模板。",
+    "risk_level": "MEDIUM",
+    "version_name": "v1",
+    "is_active": true
+  },
+  {
+    "doc_id": "template::mysql_to_hive_incremental",
+    "template_code": "mysql_to_hive_incremental",
+    "template_name": "MySQL 到 Hive 增量同步",
+    "template_type": "SYNC",
+    "business_domain": "通用数据集成",
+    "source_types": ["MYSQL"],
+    "target_types": ["HIVE"],
+    "schedule_modes": ["HOURLY", "DAILY"],
+    "required_slots": ["source_connection", "source_table", "target_connection", "target_table", "incremental_column", "schedule"],
+    "optional_slots": ["watermark_start", "where_clause"],
+    "slot_schema": {
+      "source_connection": {"type": "string"},
+      "source_table": {"type": "string"},
+      "target_connection": {"type": "string"},
+      "target_table": {"type": "string"},
+      "incremental_column": {"type": "string"},
+      "schedule": {"type": "string"},
+      "watermark_start": {"type": "string"},
+      "where_clause": {"type": "string"}
+    },
+    "compatibility_rules": {
+      "source_types": ["MYSQL"],
+      "target_types": ["HIVE"],
+      "supports_incremental": true
+    },
+    "default_payload": {
+      "task_type": "SYNC",
+      "mode": "INCREMENTAL"
+    },
+    "payload_schema": {
+      "type": "object",
+      "required": ["task_type", "mode", "source", "target", "incremental"],
+      "properties": {
+        "task_type": {"type": "string"},
+        "mode": {"type": "string"},
+        "source": {"type": "object"},
+        "target": {"type": "object"},
+        "incremental": {"type": "object"},
+        "schedule": {"type": "string"}
+      }
+    },
+    "render_rules": {
+      "source.connection": "$source_connection",
+      "source.table": "$source_table",
+      "target.connection": "$target_connection",
+      "target.table": "$target_table",
+      "incremental.column": "$incremental_column",
+      "incremental.watermark_start": "$watermark_start",
+      "where_clause": "$where_clause",
+      "schedule": "$schedule"
+    },
+    "example_inputs": [
+      "创建一个 mysql 到 hive 的按更新时间增量同步任务",
+      "每小时把 user 表按 update_time 增量同步到 hive"
+    ],
+    "example_payloads": [
+      {
+        "task_type": "SYNC",
+        "mode": "INCREMENTAL",
+        "source": {"connection": "mysql_prod", "table": "user"},
+        "target": {"connection": "hive_dw", "table": "user"},
+        "incremental": {"column": "update_time"},
+        "schedule": "0 * * * *"
+      }
+    ],
+    "template_desc": "适用于按时间字段从 MySQL 增量同步到 Hive。",
+    "risk_level": "MEDIUM",
+    "version_name": "v1",
+    "is_active": true
+  },
+  {
+    "doc_id": "template::sql_report_task",
+    "template_code": "sql_report_task",
+    "template_name": "SQL 报表任务",
+    "template_type": "REPORT",
+    "business_domain": "分析报表",
+    "source_types": ["MYSQL", "POSTGRESQL", "CLICKHOUSE", "DORIS"],
+    "target_types": ["TABLE", "FILE"],
+    "schedule_modes": ["MANUAL", "DAILY", "WEEKLY"],
+    "required_slots": ["source_connection", "sql", "target_type"],
+    "optional_slots": ["target_table", "output_path", "schedule"],
+    "slot_schema": {
+      "source_connection": {"type": "string"},
+      "sql": {"type": "string"},
+      "target_type": {"type": "string", "enum": ["TABLE", "FILE"]},
+      "target_table": {"type": "string"},
+      "output_path": {"type": "string"},
+      "schedule": {"type": "string"}
+    },
+    "compatibility_rules": {
+      "target_type_requires": {
+        "TABLE": ["target_table"],
+        "FILE": ["output_path"]
+      }
+    },
+    "default_payload": {
+      "task_type": "REPORT",
+      "output_mode": "TABLE"
+    },
+    "payload_schema": {
+      "type": "object",
+      "required": ["task_type", "source_connection", "sql", "target_type"],
+      "properties": {
+        "task_type": {"type": "string"},
+        "source_connection": {"type": "string"},
+        "sql": {"type": "string"},
+        "target_type": {"type": "string"},
+        "target_table": {"type": "string"},
+        "output_path": {"type": "string"},
+        "schedule": {"type": "string"}
+      }
+    },
+    "render_rules": {
+      "source_connection": "$source_connection",
+      "sql": "$sql",
+      "target_type": "$target_type",
+      "target_table": "$target_table",
+      "output_path": "$output_path",
+      "schedule": "$schedule"
+    },
+    "example_inputs": [
+      "创建一个每天执行的销售报表 SQL 任务",
+      "把这个 SQL 结果落一张报表表"
+    ],
+    "example_payloads": [
+      {
+        "task_type": "REPORT",
+        "source_connection": "doris_warehouse",
+        "sql": "select dt, sum(amount) from sales group by dt",
+        "target_type": "TABLE",
+        "target_table": "rpt_sales_daily"
+      }
+    ],
+    "template_desc": "适用于周期性执行 SQL 并产出报表表或文件。",
+    "risk_level": "LOW",
+    "version_name": "v1",
+    "is_active": true
+  }
+]

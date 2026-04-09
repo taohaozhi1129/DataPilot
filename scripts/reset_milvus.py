@@ -1,30 +1,40 @@
-import sys
 import os
-
-# 将项目根目录添加到 pythonpath
-sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+import sys
 
 from pymilvus import MilvusClient
-from config import settings
 
-def reset_milvus():
+PROJECT_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+sys.path.append(PROJECT_ROOT)
+
+from app.infrastructure.milvus.definitions import iter_collection_definitions  # noqa: E402
+from config import settings  # noqa: E402
+
+
+def reset_milvus() -> None:
     print(f"Connecting to Milvus at {settings.MILVUS_URI}...")
     try:
         client = MilvusClient(uri=settings.MILVUS_URI, token=settings.MILVUS_TOKEN)
-    except Exception as e:
-        print(f"Failed to connect: {e}")
+    except Exception as exc:
+        print(f"Failed to connect: {exc}")
         return
 
-    collections = ["metadata_collection", "template_collection"]
-    for col in collections:
-        if client.has_collection(col):
-            print(f"Dropping collection: {col}")
-            client.drop_collection(col)
-            print(f"Successfully dropped: {col}")
-        else:
-            print(f"Collection {col} does not exist.")
+    for definition in iter_collection_definitions():
+        try:
+            client.describe_alias(definition.alias)
+            print(f"Dropping alias: {definition.alias}")
+            client.drop_alias(definition.alias)
+        except Exception:
+            print(f"Alias {definition.alias} does not exist.")
 
-    print("\nDone. Milvus collections dropped. Restart the application to recreate them with new dimension (1024).")
+        if client.has_collection(definition.name):
+            print(f"Dropping collection: {definition.name}")
+            client.drop_collection(definition.name)
+            print(f"Successfully dropped: {definition.name}")
+        else:
+            print(f"Collection {definition.name} does not exist.")
+
+    print("\nDone. DataPilot Milvus collections and aliases dropped.")
+
 
 if __name__ == "__main__":
     reset_milvus()

@@ -1,135 +1,173 @@
-from typing import List, Dict, Any, Optional
+from __future__ import annotations
+
 import json
 import logging
+from typing import Any, Dict, List, Optional
 
 from sentence_transformers import SentenceTransformer
 
+from app.infrastructure.milvus.repositories.column_catalog_repository import ColumnCatalogRepository
+from app.infrastructure.milvus.repositories.table_catalog_repository import TableCatalogRepository
+from app.infrastructure.milvus.repositories.task_template_repository import TaskTemplateRepository
 from app.services.milvus_service import MilvusService
 from config import settings
 
-# 配置日志记录器
 logger = logging.getLogger(__name__)
 
-# 全局单例模型实例，避免重复加载
 _GLOBAL_EMBEDDING_MODEL: Optional[SentenceTransformer] = None
+
 
 class RagService:
     """
-    RAG (Retrieval-Augmented Generation) 服务类。
-    负责协调 Embedding 模型和 Milvus 向量数据库，执行语义检索任务。
-    """
-    def __init__(self):
-        self._milvus_service: Optional[MilvusService] = None
-        # 注意：这里不再保存 _embedding_model 实例变量，而是使用全局变量
+    Retrieval service for SQL and task generation.
 
-    def _get_milvus(self) -> MilvusService:
-        """延迟加载 MilvusService 实例"""
+    SQL retrieval uses:
+    - table-level catalog
+    - column-level catalog
+
+    Task retrieval uses:
+    - task template catalog
+    """
+
+    def __init__(
+        self,
+        *,
+        milvus_service: Optional[MilvusService] = None,
+        table_repository: Optional[TableCatalogRepository] = None,
+        column_repository: Optional[ColumnCatalogRepository] = None,
+        task_template_repository: Optional[TaskTemplateRepository] = None,
+    ) -> None:
+        self._milvus_service = milvus_service
+        self._table_repository = table_repository
+        self._column_repository = column_repository
+        self._task_template_repository = task_template_repository
+
+    def _get_milvus_service(self) -> MilvusService:
         if self._milvus_service is None:
             self._milvus_service = MilvusService()
         return self._milvus_service
 
+    def _get_table_repository(self) -> TableCatalogRepository:
+        if self._table_repository is None:
+            self._table_repository = TableCatalogRepository(self._get_milvus_service())
+        return self._table_repository
+
+    def _get_column_repository(self) -> ColumnCatalogRepository:
+        if self._column_repository is None:
+            self._column_repository = ColumnCatalogRepository(self._get_milvus_service())
+        return self._column_repository
+
+    def _get_task_template_repository(self) -> TaskTemplateRepository:
+        if self._task_template_repository is None:
+            self._task_template_repository = TaskTemplateRepository(self._get_milvus_service())
+        return self._task_template_repository
+
     def _get_embedding_model(self) -> SentenceTransformer:
-        """
-        延迟加载 Embedding 模型 (全局单例模式)。
-        确保整个应用生命周期内只加载一次模型，避免性能损耗。
-        """
         global _GLOBAL_EMBEDDING_MODEL
         if _GLOBAL_EMBEDDING_MODEL is None:
-            logger.info(f"Loading embedding model (Singleton) from: {settings.EMBEDDING_MODEL_PATH}")
-            # 这里可能会耗时几秒钟，但只会执行一次
+            logger.info("Loading embedding model from: %s", settings.EMBEDDING_MODEL_PATH)
             _GLOBAL_EMBEDDING_MODEL = SentenceTransformer(settings.EMBEDDING_MODEL_PATH)
             logger.info("Embedding model loaded successfully.")
         return _GLOBAL_EMBEDDING_MODEL
 
     def _get_embedding(self, text: str, instruction: str = "") -> List[float]:
-        """
-        为单个文本生成向量 embedding。
-        
-        Args:
-            text: 输入文本
-            instruction: (Optional) 针对检索任务的查询指令前缀 (适用于 BGE v1.5+)
-            
-        Returns:
-            List[float]: 文本的向量表示
-        """
-        # 针对 BGE v1.5 等模型，查询端通常需要添加特定指令以提升效果
         input_text = f"{instruction}{text}" if instruction else text
-        
-        # show_progress_bar=False 避免在生产日志中打印冗余的 tqdm 进度条
-        embeddings = self._get_embedding_model().encode([input_text], show_progress_bar=False)
+        embeddings = self._get_embedding_model().encode(
+            [input_text],
+            show_progress_bar=False,
+            normalize_embeddings=True,
+        )
         return embeddings[0].tolist()
 
+    def search_tables(self, query: str, limit: int = 5) -> List[Dict[str, Any]]:
+        instruction = "为这个句子生成表示以用于检索相关文章："
+        query_vector = self._get_embedding(query, instruction=instruction)
+        results = self._get_table_repository().search_tables(query, query_vector, limit=limit)
+        return [self._normalize_json_fields(item) for item in results]
+
+    def search_columns(
+        self,
+        query: str,
+        *,
+        table_ids: Optional[List[str]] = None,
+        limit: int = 10,
+    ) -> List[Dict[str, Any]]:
+        instruction = "为这个句子生成表示以用于检索相关文章："
+        query_vector = self._get_embedding(query, instruction=instruction)
+        results = self._get_column_repository().search_columns(
+            query,
+            query_vector,
+            table_ids=table_ids,
+            limit=limit,
+        )
+        return [self._normalize_json_fields(item) for item in results]
+
+    def search_templates(self, query: str, limit: int = 3) -> List[Dict[str, Any]]:
+        instruction = "为这个句子生成表示以用于检索相关文章："
+        query_vector = self._get_embedding(query, instruction=instruction)
+        results = self._get_task_template_repository().search_templates(
+            query,
+            query_vector,
+            limit=limit,
+        )
+        return [self._normalize_json_fields(item) for item in results]
+
+    def search_sql_context(
+        self,
+        query: str,
+        *,
+        table_limit: int = 4,
+        column_limit: int = 12,
+    ) -> Dict[str, List[Dict[str, Any]]]:
+        tables = self.search_tables(query, limit=table_limit)
+        table_ids = [table.get("doc_id") for table in tables if table.get("doc_id")]
+        columns = self.search_columns(
+            query,
+            table_ids=table_ids or None,
+            limit=column_limit,
+        )
+        if table_ids and not columns:
+            logger.info("No columns found for retrieved tables. Retrying column search without table filter.")
+            columns = self.search_columns(query, limit=column_limit)
+        return {"tables": tables, "columns": columns}
+
     def search_schemas(self, query: str, limit: int = 5) -> List[Dict[str, Any]]:
-        """
-        在 metadata_collection 中搜索相关的表结构或元数据。
-        使用混合检索 (Hybrid Search) 结合关键词 (BM25) 和语义向量。
-        
-        Args:
-            query: 用户查询文本
-            limit: 返回结果数量限制
-            
-        Returns:
-            List[Dict[str, Any]]: 检索到的元数据列表
-        """
-        # BGE v1.5 推荐的中文查询指令
-        instruction = "为这个句子生成表示以用于检索相关文章："
-        query_vector = self._get_embedding(query, instruction=instruction)
-        # 调用 Milvus 混合检索
-        results = self._get_milvus().hybrid_search(
-            collection_name="metadata_collection",
-            query_text=query,
-            query_vector=query_vector,
-            limit=limit,
+        sql_context = self.search_sql_context(
+            query,
+            table_limit=min(max(limit, 1), 4),
+            column_limit=max(limit * 2, 6),
         )
-        return [self._normalize_schema(hit) for hit in results]
+        schemas: List[Dict[str, Any]] = []
+        columns_by_table: Dict[str, List[Dict[str, Any]]] = {}
+        for column in sql_context["columns"]:
+            columns_by_table.setdefault(column.get("table_id", ""), []).append(column)
 
-    def search_templates(self, query: str, limit: int = 1) -> List[Dict[str, Any]]:
-        """
-        在 template_collection 中搜索相关的任务模板。
-        使用混合检索 (Hybrid Search) 结合关键词 (BM25) 和语义向量。
-        
-        Args:
-            query: 用户查询文本
-            limit: 返回结果数量限制
-            
-        Returns:
-            List[Dict[str, Any]]: 检索到的模板列表
-        """
-        # BGE v1.5 推荐的中文查询指令
-        instruction = "为这个句子生成表示以用于检索相关文章："
-        query_vector = self._get_embedding(query, instruction=instruction)
-        results = self._get_milvus().hybrid_search(
-            collection_name="template_collection",
-            query_text=query,
-            query_vector=query_vector,
-            limit=limit,
-        )
-        return [self._normalize_template(hit) for hit in results]
+        for table in sql_context["tables"]:
+            related_columns = columns_by_table.get(table.get("doc_id", ""), [])
+            schemas.append(
+                {
+                    "content": table.get("full_table_name") or table.get("table_name", ""),
+                    "metadata": {
+                        "asset_type": "table",
+                        **table,
+                        "columns": related_columns,
+                    },
+                    "score": table.get("score", 0.0),
+                }
+            )
 
-    def _normalize_schema(self, hit: Dict[str, Any]) -> Dict[str, Any]:
-        """格式化元数据检索结果"""
-        metadata = self._safe_json(hit.get("metadata", ""))
-        return {
-            "content": hit.get("content", ""),
-            "metadata": metadata,
-            "score": hit.get("score", 0.0)
-        }
+        return schemas[:limit]
 
-    def _normalize_template(self, hit: Dict[str, Any]) -> Dict[str, Any]:
-        """格式化模板检索结果"""
-        payload = self._safe_json(hit.get("payload", ""))
-        return {
-            "content": hit.get("content", ""),
-            "payload": payload,
-            "score": hit.get("score", 0.0)
-        }
+    def _normalize_json_fields(self, value: Dict[str, Any]) -> Dict[str, Any]:
+        normalized = {}
+        for key, item in value.items():
+            normalized[key] = self._safe_json(item)
+        return normalized
 
     def _safe_json(self, value: Any) -> Any:
-        """安全地解析 JSON 字符串，如果解析失败或不是字符串则原样返回"""
         if isinstance(value, str) and value:
             try:
                 return json.loads(value)
-            except Exception as e:
-                logger.warning(f"JSON parse error: {e}")
+            except Exception:
                 return value
         return value

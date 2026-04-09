@@ -13,7 +13,7 @@ class Settings(BaseSettings):
     # -------------------------------------------------------------------------
     # LLM (OpenAI / Compatible) Configuration
     # -------------------------------------------------------------------------
-    OPENAI_API_KEY: Optional[str] = None
+    OPENAI_API_KEY: Optional[str] = ""
     OPENAI_BASE_URL: str = "https://api.deepseek.com"
     OPENAI_MODEL_NAME: str = "deepseek-chat"
     
@@ -26,7 +26,7 @@ class Settings(BaseSettings):
     # -------------------------------------------------------------------------
     # Embedding Model Configuration
     # -------------------------------------------------------------------------
-    EMBEDDING_MODEL_PATH: str = r"C:\\embedding\\bge-large-zh-v1.5"
+    EMBEDDING_MODEL_PATH: str = r"D:\Embedding\bge-large-zh-v1.5"
     EMBEDDING_DIMENSION: int = 1024
     MAX_TEXT_LEN: int = 8192
 
@@ -36,9 +36,13 @@ class Settings(BaseSettings):
     BM25_ANALYZER: str = "jieba"
     BM25_K1: float = 1.2
     BM25_B: float = 0.75
+    SPARSE_INVERTED_INDEX_ALGO: str = "DAAT_WAND"
     HYBRID_DENSE_WEIGHT: float = 0.6
     HYBRID_SPARSE_WEIGHT: float = 0.4
     HYBRID_CANDIDATE_MULT: int = 5
+    HNSW_M: int = 32
+    HNSW_EF_CONSTRUCTION: int = 200
+    HNSW_EF_SEARCH: int = 96
 
     # -------------------------------------------------------------------------
     # Conversation Memory

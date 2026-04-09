@@ -1,15 +1,105 @@
-from fastapi import FastAPI
-from pydantic import BaseModel, Field
-from typing import List, Optional
-from langchain_core.messages import HumanMessage
-from app.agents.graph import graph
-from config import settings
-from app.core.logger import setup_logging
+import socket
 import uuid
-import logging
+from contextlib import asynccontextmanager
+from typing import Any, Dict, List, Optional
+
+from fastapi import FastAPI
+from langchain_core.messages import HumanMessage
+from pydantic import BaseModel, Field
+
+from app.agents.graph import graph
+from app.core.logger import setup_logging
+from app.infrastructure.milvus.definitions import DEFAULT_REQUIRED_COLLECTIONS
+from app.services.milvus_service import MilvusService
+from config import settings
 
 # 初始化日志
 logger = setup_logging()
+
+
+def _check_redis_health() -> Dict[str, Any]:
+    try:
+        with socket.create_connection(
+            (settings.REDIS_HOST, settings.REDIS_PORT),
+            timeout=settings.REDIS_CONNECT_TIMEOUT_SECONDS,
+        ):
+            return {
+                "status": "ok",
+                "url": settings.REDIS_URL,
+            }
+    except OSError as exc:
+        return {
+            "status": "degraded",
+            "url": settings.REDIS_URL,
+            "error": str(exc),
+        }
+
+
+def _check_milvus_health() -> Dict[str, Any]:
+    try:
+        service = MilvusService(validate_collections=False)
+        validation = service.validate_required_collections(DEFAULT_REQUIRED_COLLECTIONS)
+        return {
+            "status": "ok",
+            "uri": settings.MILVUS_URI,
+            "collections": validation,
+        }
+    except Exception as exc:
+        return {
+            "status": "degraded",
+            "uri": settings.MILVUS_URI,
+            "error": str(exc),
+        }
+
+
+def _check_llm_health() -> Dict[str, Any]:
+    if settings.OPENAI_API_KEY:
+        return {
+            "status": "ok",
+            "model": settings.OPENAI_MODEL_NAME,
+            "base_url": settings.OPENAI_BASE_URL,
+        }
+    return {
+        "status": "degraded",
+        "model": settings.OPENAI_MODEL_NAME,
+        "base_url": settings.OPENAI_BASE_URL,
+        "error": "OPENAI_API_KEY is not configured.",
+    }
+
+
+def _collect_runtime_health() -> Dict[str, Any]:
+    dependencies = {
+        "milvus": _check_milvus_health(),
+        "redis": _check_redis_health(),
+        "llm": _check_llm_health(),
+    }
+    overall_status = "ok" if all(item["status"] == "ok" for item in dependencies.values()) else "degraded"
+    return {
+        "status": overall_status,
+        "service": "DataPilot",
+        "version": "1.0.0",
+        "dependencies": dependencies,
+    }
+
+
+@asynccontextmanager
+async def lifespan(app_instance: FastAPI):
+    runtime_health = _collect_runtime_health()
+    app_instance.state.runtime_health = runtime_health
+
+    if runtime_health["dependencies"]["milvus"]["status"] != "ok":
+        logger.warning("Milvus runtime validation failed on startup: %s", runtime_health["dependencies"]["milvus"])
+    else:
+        logger.info("Milvus runtime validation passed on startup.")
+
+    if runtime_health["dependencies"]["redis"]["status"] != "ok":
+        logger.warning("Redis health check failed on startup: %s", runtime_health["dependencies"]["redis"])
+
+    if runtime_health["dependencies"]["llm"]["status"] != "ok":
+        logger.warning("LLM configuration is incomplete: %s", runtime_health["dependencies"]["llm"])
+
+    yield
+
 
 app = FastAPI(
     title="DataPilot AI Platform",
@@ -22,7 +112,8 @@ app = FastAPI(
     - ⚙️ **Text-to-Task (Automation)**: 智能解析自然语言，自动构建数据同步与 ETL 任务配置，实现从“说话”到“落地”的自动化。
     - 🔄 **多轮交互 (Context Aware)**: 支持长对话记忆与槽位填充 (Slot Filling)，主动追问缺失信息，确保任务完整执行。
     """,
-    version="1.0.0"
+    version="1.0.0",
+    lifespan=lifespan,
 )
 
 class ChatRequest(BaseModel):
@@ -95,4 +186,6 @@ async def chat_endpoint(request: ChatRequest):
 
 @app.get("/health", summary="健康检查")
 async def health_check():
-    return {"status": "ok", "version": "1.0.0", "backend": "DataCopilot AI"}
+    runtime_health = _collect_runtime_health()
+    app.state.runtime_health = runtime_health
+    return runtime_health
